@@ -5,10 +5,6 @@ const entregasReales = [
     {
         imagen: "img/clientes/cliente_Chimuelo.jpg",
         titulo: "Pedido Personalizado: Chimuelo"
-    },
-    {
-        imagen: "img/logo.jpg",
-        titulo: "Taza Personalizada: Maruchan"
     }
 ];
 
