@@ -98,7 +98,7 @@ export function renderProducts(items) {
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${badgeHTML}
-                <img src="${prod.imagen}" alt="${prod.nombre}" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+del+Producto'">
+                <img src="${prod.imagen}" alt="${prod.nombre}" onerror="this.onerror=null; this.src='img/notFound.jpg';">
             </div>
             <div class="product-info">
                 <div>
