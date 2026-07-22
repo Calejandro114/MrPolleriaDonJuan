@@ -7,8 +7,8 @@ const entregasReales = [
         titulo: "Pedido Personalizado: Chimuelo"
     },
     {
-        imagen: "img/logo.png",
-        titulo: "Grabado Láser Personalizado"
+        imagen: "img/logo.jpg",
+        titulo: "Taza Personalizada: Maruchan"
     }
 ];
 
