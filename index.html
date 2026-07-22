@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo & Servicios Personalizados</title>
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header class="header">
+        <img src="img/logo.png" alt="Logo de la Tienda" class="logo" onerror="this.src='https://via.placeholder.com/110'">
+        <h1>Mi Tienda Personalizada</h1>
+        <p class="tagline">Impresión 3D, Corte Láser, Gorras, Grabados y Papelería</p>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/mr.polleriadonjuan/" target="_blank" class="btn-social btn-ig">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a href="https://wa.me/526673538481?text=Hola,%20tengo%20una%20consulta%20general" target="_blank" class="btn-social btn-wa">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Banner de Servicios y Trabajos Destacados -->
+        <section class="featured-services-box">
+            <div class="featured-header">
+                <h2><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Trabajos Reales & Servicios</h2>
+                <p>Especialistas en prototipado, piezas únicas y producción por volumen</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>Impresión 3D PLA/PETG</span>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Corte y Grabado Láser</span>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-hat-cowboy"></i>
+                    <span>Gorras & Personalización</span>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Libretas & Papelería</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner de Cotización Especial -->
+        <div class="custom-order-box">
+            <div>
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> ¿Tienes un diseño o STL propio?</h3>
+                <p>Mándanos tus vectores, archivos 3D o idea para cotizar medidas y acabados.</p>
+            </div>
+            <a id="btn-custom-quote" href="https://wa.me/526673538481?text=Hola,%20me%20gustaria%20cotizar%20un%20proyecto%20especial/diseño%20personalizado." target="_blank" class="btn-quote">
+                <i class="fa-solid fa-calculator"></i> Cotizar Proyecto
+            </a>
+        </div>
+
+        <!-- SECCIÓN: CARRUSEL DE TRABAJOS ENTREGADOS -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2><i class="fa-solid fa-camera-retro" style="color: #38bdf8;"></i> Trabajos Entregados</h2>
+                <p>Proyectos reales listos y entregados a nuestros clientes</p>
+            </div>
+            
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" id="carousel-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                
+                <div class="carousel-track-wrapper">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Las fotos de entregas se cargan aquí desde JS -->
+                    </div>
+                </div>
+
+                <button class="carousel-btn next-btn" id="carousel-next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Barra de Búsqueda Estilizada -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" placeholder="Buscar por producto (ej. llavero, gorra, Pokémon...)" autocomplete="off">
+            <button id="clear-search" class="clear-btn" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- Filtros por Categoría -->
+        <nav class="categories" id="categories-container">
+            <!-- Se carga dinámicamente desde JS -->
+        </nav>
+
+        <!-- Grid de Productos -->
+        <section class="products-grid" id="products-grid">
+            <p style="color: #94a3b8; grid-column: 1/-1; text-align: center;">Cargando catálogo en vivo...</p>
+        </section>
+    </main>
+
+    <!-- Previsualización de Foto Limpia (Modal) -->
+    <div id="image-modal" class="modal">
+        <div class="modal-wrapper">
+            <img id="modal-img" src="" alt="Previsualización de producto">
+        </div>
+    </div>
+
+    <!-- Firebase SDKs (Compat modo global) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Carga del punto de entrada principal en JS (Modulo) -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
