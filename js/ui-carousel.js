@@ -26,7 +26,7 @@ export function initCarousel() {
         const div = document.createElement("div");
         div.className = "carousel-item";
         div.innerHTML = `
-            <img src="${item.imagen}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/220x160?text=Trabajo+Entregado'">
+            <img src="${item.imagen}" alt="${item.titulo}" onerror="this.onerror=null; this.src='https://placehold.co/300x200?text=Don+Juan';" />
             <div class="carousel-caption">${item.titulo}</div>
         `;
 
