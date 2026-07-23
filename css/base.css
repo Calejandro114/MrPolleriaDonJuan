@@ -1,3 +1,5 @@
+/* css/base.css */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,20 +7,39 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: #0f172a;
     color: #f8fafc;
-    padding: 20px 10px;
+    /* Espacio superior para que el header desplegado no tape la sección de Trabajos Reales */
+    padding-top: 300px !important; 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Ampliar espacio útil en pantalla */
 .container {
-    max-width: 900px;
-    width: 100%;
+    max-width: 1280px; /* Pasa de 900px a 1280px para llenar mejor monitores y laptops */
+    width: 95%;        /* Deja margen óptimo en móviles */
+    margin: 0 auto;
 }
 
 .hidden {
     display: none !important;
+}
+
+/* Espacio de compensación al hacer clic en enlaces del menú */
+section, main, div[id] {
+    scroll-margin-top: 130px;
 }

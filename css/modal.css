@@ -1,5 +1,9 @@
-.modal {
-    display: none;
+/* ==========================================
+   MODAL DE PREVISUALIZACIÓN DE IMÁGENES
+   ========================================== */
+
+/* 1. Fondo Oscuro Transparente */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,39 +11,81 @@
     height: 100vh;
     background-color: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(8px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    cursor: pointer;
-}
-
-.modal-wrapper {
-    position: relative;
-    max-width: 90%;
-    max-height: 85vh;
+    z-index: 99999;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 
-.modal-wrapper img {
-    max-width: 100%;
+/* 2. Contenedor Flotante */
+.modal-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90vw;
     max-height: 85vh;
+    cursor: default;
+}
+
+/* 3. Imagen con tamaño estrictamente limitado */
+.modal-content img,
+.modal-img {
+    max-width: 80vw;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-    border: 1px solid #334155;
-    animation: zoomIn 0.2s ease-out;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    display: block;
 }
 
-@keyframes zoomIn {
-    from {
-        transform: scale(0.9);
-        opacity: 0;
+/* 4. Botón de Cerrar (X) */
+.modal-close-btn,
+.modal-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: #ef4444;
+    color: #ffffff;
+    border: 2px solid #0f172a;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    transition: transform 0.2s;
+}
+
+.modal-close-btn:hover,
+.modal-close:hover {
+    transform: scale(1.15);
+}
+
+/* 5. Adaptación para Celulares */
+@media (max-width: 640px) {
+    .modal-content img,
+    .modal-img {
+        max-width: 90vw;
+        max-height: 60vh;
     }
-    to {
-        transform: scale(1);
-        opacity: 1;
+
+    .modal-close-btn,
+    .modal-close {
+        top: -10px;
+        right: -10px;
+        width: 32px;
+        height: 32px;
     }
 }

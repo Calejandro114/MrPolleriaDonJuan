@@ -1,32 +1,90 @@
+/* css/footer.css */
 .main-footer {
     border-top: 1px solid #334155;
     background-color: #0f172a;
-    padding: 25px 15px;
-    margin-top: 40px;
-    text-align: center;
+    padding: 40px 20px 20px 20px;
+    margin-top: 50px;
+    width: 100%;
 }
 
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+.footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.footer-col h3 {
+    color: #38bdf8;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.footer-col h4 {
+    color: #f8fafc;
+    font-size: 1rem;
     margin-bottom: 12px;
 }
 
-.footer-links a {
+.footer-desc, .footer-text {
     color: #94a3b8;
-    text-decoration: none;
     font-size: 0.85rem;
-    transition: color 0.2s ease;
+    line-height: 1.5;
+    margin-bottom: 10px;
 }
 
-.footer-links a:hover {
+.footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-list li {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-list i {
     color: #38bdf8;
 }
 
-.footer-copyright p {
+.faq-item {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.faq-item summary {
+    font-weight: 600;
+    color: #38bdf8;
+}
+
+.faq-item p {
+    margin-top: 6px;
+    color: #94a3b8;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 30px auto 0 auto;
+    padding-top: 15px;
+    border-top: 1px solid #1e293b;
+    text-align: center;
     color: #64748b;
     font-size: 0.8rem;
-    margin: 0;
 }

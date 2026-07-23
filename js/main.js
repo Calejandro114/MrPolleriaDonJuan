@@ -1,5 +1,6 @@
-// js/main.js
 import { db } from './firebase-config.js';
+import { renderNavUI } from './ui-nav.js';
+import { renderFooterUI } from './ui-footer.js';
 import { initModal } from './ui-modal.js';
 import { initCarousel } from './ui-carousel.js';
 import { initCategories } from './ui-categories.js';
@@ -9,9 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let listaProductos = [];
 
     // 1. Inicializar UI e inyectar HTML de módulos
+    renderNavUI();    // 👈 Inyecta el menú de navegación superior
+    renderFooterUI(); // 👈 Inyecta el pie de página
     initModal();
     initCarousel();
-    renderFiltersUI(); // 👈 Inyecta el HTML del panel desplegable
+    renderFiltersUI(); // Inyecta el HTML del panel desplegable de búsqueda
 
     // 2. Inicializar Categorías
     initCategories((categoriaSeleccionada) => {
@@ -32,9 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         aplicarFiltrosYRender(listaProductos);
     });
 
-
-
-   // Detectar scroll con zona muerta (Histéresis) para evitar el parpadeo en bucle
+    // 5. Detectar scroll con zona muerta (Histéresis) para evitar el parpadeo en bucle
     const mainHeader = document.querySelector(".main-header");
 
     if (mainHeader) {

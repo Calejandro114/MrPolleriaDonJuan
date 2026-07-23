@@ -10,58 +10,57 @@
 </head>
 <body>
 
-  <!-- Encabezado Fijo a Pantalla Completa (Fuera del container) -->
-  <header class="main-header">
+  <!-- 1. INICIO (Header con Logo, Título y Menú de Navegación) -->
+  <header class="main-header" id="inicio">
     <div class="header-content">
-      <!-- 1. Foto de Logo -->
       <img src="img/logo.jpg" alt="Pollería Don Juan Logo" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
-      
-      <!-- 2. Nombre y Eslogan -->
       <div class="header-text">
         <h1>Pollería Don Juan</h1>
         <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
       </div>
-
-      <!-- 3. Botón de la Lupa -->
-      <button id="toggle-search-btn" class="btn-icon" title="Buscar y Filtrar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
     </div>
 
-    <!-- Contenedor donde JS inyecta el panel de búsqueda y filtros -->
-    <div id="search-filter-wrapper"></div>
+    <!-- Menú con el orden exacto propuesto -->
+    <div id="nav-wrapper"></div>
   </header>
 
-  <!-- Contenido Principal Centrado -->
+  <!-- Contenido Principal -->
   <div class="container">
-    <!-- Categorías -->
-    <nav id="categories-container" class="categories-wrapper"></nav>
-
-    <!-- Carrusel -->
+    
+    <!-- 2. TRABAJOS REALES (Carrusel de entregas a clientes) -->
     <section id="carousel-container"></section>
 
-    <!-- Grilla de Productos -->
-    <main>
-      <div id="products-grid" class="products-grid"></div>
-    </main>
+    <!-- 3. CATÁLOGO -->
+    <section id="catalogo-seccion">
+      
+      <!-- Panel de Búsqueda y Lupa -->
+      <div class="search-section-wrapper">
+        <div class="search-bar-trigger">
+          <span class="search-label"><i class="fa-solid fa-filter"></i> Filtrar y Buscar Productos</span>
+          <button id="toggle-search-btn" class="btn-icon" title="Buscar y Filtrar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div id="search-filter-wrapper"></div>
+      </div>
+
+      <!-- Categorías del Catálogo ("Todos", "3D", "Llaveros", etc.) -->
+      <nav id="categories-container" class="categories-wrapper"></nav>
+
+      <!-- Grilla de Productos que vendes -->
+      <main>
+        <div id="products-grid" class="products-grid"></div>
+      </main>
+
+    </section>
+
   </div>
+
+  <!-- 4. CÓMO PEDIR, FAQ y CONTACTO (En el Pie de página) -->
+  <div id="footer-container"></div>
 
   <!-- Contenedor para el Modal de Imagen -->
   <div id="modal-container"></div>
-
-  <!-- Contenido Principal Centrado -->
-  <div class="container">
-    <!-- Categorías -->
-    <nav id="categories-container" class="categories-wrapper"></nav>
-
-    <!-- Carrusel de Clientes (Inyectado por JS) -->
-    <section id="carousel-container"></section>
-
-    <!-- Grilla de Productos -->
-    <main>
-      <div id="products-grid" class="products-grid"></div>
-    </main>
-  </div>
 
   <!-- Firebase Scripts y Módulo Principal -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>

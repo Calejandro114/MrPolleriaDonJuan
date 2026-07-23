@@ -1,30 +1,34 @@
 // js/ui-modal.js
-export function renderModalUI() {
+
+export function initModal() {
     const container = document.getElementById("modal-container");
     if (!container) return;
 
-    container.innerHTML = `
-        <div id="image-modal" class="modal" style="display: none;">
-            <img id="modal-img" class="modal-content" alt="Previsualización" />
-        </div>
-    `;
-}
-
-export function initModal() {
-    renderModalUI(); // Inyectamos el HTML al cargar
-    const modal = document.getElementById("image-modal");
-    if (!modal) return;
-    
-    modal.addEventListener("click", () => {
-        modal.style.display = "none";
+    // Escuchar clic fuera de la imagen para cerrar
+    container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal-overlay") || e.target.classList.contains("modal-close")) {
+            closeModal();
+        }
     });
 }
 
 export function openModal(imageSrc) {
-    const modal = document.getElementById("image-modal");
-    const modalImg = document.getElementById("modal-img");
-    if (!modal || !modalImg) return;
-    
-    modalImg.src = imageSrc;
-    modal.style.display = "flex";
+    const container = document.getElementById("modal-container");
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <img src="${imageSrc}" class="modal-img" alt="Previsualización" />
+            </div>
+        </div>
+    `;
+}
+
+export function closeModal() {
+    const container = document.getElementById("modal-container");
+    if (container) {
+        container.innerHTML = "";
+    }
 }

@@ -11,22 +11,22 @@
     max-width: none !important;  /* Quita cualquier límite de ancho al header */
     z-index: 9999;
     background-color: #0f172a !important; /* Fondo opaco de lado a lado */
-    padding: 15px 20px 20px 20px;
+    padding: 15px 20px 15px 20px;
     border-bottom: 1px solid rgba(51, 65, 85, 0.4);
     box-sizing: border-box;
-    transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
 
 .header-content {
     width: 100%;
-    max-width: 900px;  /* AQUÍ es donde se limita el ancho para que quede centrado */
+    max-width: 900px;  /* Limita el ancho para centrar el logo y título */
     margin: 0 auto;    /* Centra el logo y textos en medio de la pantalla */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    position: relative; /* Referencia para posicionar la lupa abajo a la izquierda */
+    position: relative;
     text-align: center;
     transition: all 0.3s ease-in-out;
 }
@@ -56,15 +56,10 @@
     transition: all 0.3s ease-in-out;
 }
 
-/* ==========================================
-   BOTÓN LUPA: ABAJO A LA IZQUIERDA DEL CONTENIDO
-   ========================================== */
-#toggle-search-btn {
-    position: absolute;
-    left: 0;         /* Pegado a la izquierda del bloque de 900px */
-    bottom: 0;       /* Límite inferior */
-    top: auto;
-    transform: none;
+/* --- ESTILOS DEL CONTENEDOR DEL MENÚ --- */
+#nav-wrapper {
+    width: 100%;
+    transition: all 0.3s ease-in-out;
 }
 
 /* ==========================================
@@ -72,7 +67,7 @@
    ========================================== */
 
 .main-header.scrolled {
-    padding: 8px 20px 12px 20px;
+    padding: 8px 20px 10px 20px !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
     border-bottom-color: #334155;
 }
@@ -84,16 +79,31 @@
 }
 
 .main-header.scrolled .logo {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-width: 2px;
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
 }
 
 .main-header.scrolled .header-text h1 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
 }
 
 .main-header.scrolled .header-text .tagline {
-    display: none;
+    display: none; /* Oculta la descripción para ahorrar espacio vertical */
+}
+
+/* Mantiene la barra de navegación compacta y SIEMPRE VISIBLE al bajar */
+.main-header.scrolled #nav-wrapper {
+    margin-top: 6px;
+}
+
+.main-header.scrolled .main-nav {
+    padding-top: 6px;
+    gap: 8px; /* Reduce ligeramente el espacio entre botones */
+}
+
+.main-header.scrolled .nav-link {
+    padding: 4px 10px; /* Botones un poco más compactos al hacer scroll */
+    font-size: 0.8rem;
 }
