@@ -31,4 +31,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         aplicarFiltrosYRender(listaProductos);
     });
+
+
+
+   // Detectar scroll con zona muerta (Histéresis) para evitar el parpadeo en bucle
+    const mainHeader = document.querySelector(".main-header");
+
+    if (mainHeader) {
+        let isScrolled = false;
+
+        window.addEventListener("scroll", () => {
+            const scrollAmount = window.scrollY || document.documentElement.scrollTop;
+
+            // Si bajamos más de 80px y aún no está colapsado -> Encoger
+            if (scrollAmount > 80 && !isScrolled) {
+                isScrolled = true;
+                mainHeader.classList.add("scrolled");
+            } 
+            // Si subimos a menos de 20px y está colapsado -> Volver a agrandar
+            else if (scrollAmount < 20 && isScrolled) {
+                isScrolled = false;
+                mainHeader.classList.remove("scrolled");
+            }
+        });
+    }
 });

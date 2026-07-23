@@ -1,56 +1,99 @@
-.header {
-    text-align: center;
-    margin-bottom: 25px;
+/* ==========================================
+   HEADER FIJO Y OPACO A PANTALLA COMPLETA
+   ========================================== */
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;                  /* Ocupa el 100% de la pantalla de orilla a orilla */
+    max-width: none !important;  /* Quita cualquier límite de ancho al header */
+    z-index: 9999;
+    background-color: #0f172a !important; /* Fondo opaco de lado a lado */
+    padding: 15px 20px 20px 20px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+    box-sizing: border-box;
+    transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.header-content {
+    width: 100%;
+    max-width: 900px;  /* AQUÍ es donde se limita el ancho para que quede centrado */
+    margin: 0 auto;    /* Centra el logo y textos en medio de la pantalla */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative; /* Referencia para posicionar la lupa abajo a la izquierda */
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- ESTADO INICIAL (GRANDE) --- */
 .logo {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #38bdf8;
-    margin-bottom: 10px;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    transition: all 0.3s ease-in-out;
 }
 
-h1 {
+.header-text h1 {
     font-size: 1.8rem;
-    margin-bottom: 5px;
+    margin: 0;
+    color: #f8fafc;
+    transition: all 0.3s ease-in-out;
 }
 
-.tagline {
+.header-text .tagline {
     color: #94a3b8;
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-}
-
-.social-links {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.btn-social {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
     font-size: 0.9rem;
-    color: #fff;
-    transition: transform 0.2s;
+    margin-top: 4px;
+    transition: all 0.3s ease-in-out;
 }
 
-.btn-social:hover {
-    transform: translateY(-2px);
+/* ==========================================
+   BOTÓN LUPA: ABAJO A LA IZQUIERDA DEL CONTENIDO
+   ========================================== */
+#toggle-search-btn {
+    position: absolute;
+    left: 0;         /* Pegado a la izquierda del bloque de 900px */
+    bottom: 0;       /* Límite inferior */
+    top: auto;
+    transform: none;
 }
 
-.btn-ig {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+/* ==========================================
+   ESTADO COMPACTO (AL HACER SCROLL)
+   ========================================== */
+
+.main-header.scrolled {
+    padding: 8px 20px 12px 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    border-bottom-color: #334155;
 }
 
-.btn-wa {
-    background-color: #0284c7;
+.main-header.scrolled .header-content {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
+.main-header.scrolled .logo {
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+}
+
+.main-header.scrolled .header-text h1 {
+    font-size: 1.15rem;
+}
+
+.main-header.scrolled .header-text .tagline {
+    display: none;
 }
