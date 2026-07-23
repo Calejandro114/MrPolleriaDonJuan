@@ -10,17 +10,27 @@
 </head>
 <body>
 
-  <!-- Encabezado con Botón de Lupa e Inyección del Panel -->
-  <header class="main-header">
-    <div class="header-content">
+  <!-- Encabezado Principal con Logo, Título, Lupa e Inyección del Panel -->
+<header class="main-header">
+  <div class="header-content">
+    <!-- 1. Foto de Logo -->
+    <img src="img/logo.jpg" alt="Pollería Don Juan Logo" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
+    
+    <!-- 2. Nombre y Eslogan -->
+    <div class="header-text">
       <h1>Pollería Don Juan</h1>
-      <button id="toggle-search-btn" class="btn-icon" title="Buscar y Filtrar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
     </div>
-    <!-- Contenedor donde JS inyectará el buscador y los filtros -->
-    <div id="search-filter-wrapper"></div>
-  </header>
+
+    <!-- 3. Botón de la Lupa -->
+    <button id="toggle-search-btn" class="btn-icon" title="Buscar y Filtrar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+
+  <!-- Contenedor donde JS inyecta el panel de búsqueda y filtros -->
+  <div id="search-filter-wrapper"></div>
+</header>
 
   <!-- Categorías -->
   <nav id="categories-container" class="categories-wrapper"></nav>
