@@ -15,10 +15,10 @@ export function renderFooterUI() {
                     <p class="footer-desc">Creaciones personalizadas en impresión 3D, corte láser, papelería y coleccionables.</p>
                     <div class="footer-socials">
                         <a href="https://wa.me/${WHATSAPP_PHONE}" target="_blank" class="btn-social btn-wa">
-                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
                         </a>
                         <a href="https://instagram.com" target="_blank" class="btn-social btn-ig">
-                            <i class="fa-brands fa-instagram"></i> Instagram
+                            <i class="fa-brands fa-instagram"></i> Siguenos en Instagram
                         </a>
                     </div>
                 </div>
@@ -28,7 +28,7 @@ export function renderFooterUI() {
                     <h4>Métodos de Pago</h4>
                     <ul class="footer-list">
                         <li><i class="fa-solid fa-money-bill-transfer"></i> Transferencia SPEI</li>
-                        <li><i class="fa-solid fa-store"></i> Pago en OXXO / Depósito</li>
+                        <li><i class="fa-solid fa-store"></i> Pago en Depósito</li>
                         <li><i class="fa-solid fa-hand-holding-dollar"></i> Efectivo al entregar (Local)</li>
                     </ul>
                 </div>
