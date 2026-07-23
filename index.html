@@ -1,157 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo & Servicios Personalizados</title>
-    <!-- FontAwesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Estilos CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pollería Don Juan</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome e Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <header class="header">
-        <img src="img/logo.jpg" alt="Logo de DonJuan" class="logo" onerror="this.src='https://via.placeholder.com/110'">
-        <h1>Mr PolleriaDonJuan Store</h1>
-        <p class="tagline">Impresión 3D, Corte Láser, Gorras, Grabados y Papelería</p>
-
-        <div class="social-links">
-            <a href="https://www.instagram.com/mr.polleriadonjuan/" target="_blank" class="btn-social btn-ig">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </a>
-            <a href="https://wa.me/526673538481?text=Hola,%20tengo%20una%20consulta%20general" target="_blank" class="btn-social btn-wa">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
-            </a>
-        </div>
-    </header>
-
-    <main class="container">
-
-        <!-- Banner de Servicios y Trabajos Destacados -->
-        <section class="featured-services-box">
-            <div class="featured-header">
-                <h2><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Trabajos Reales & Servicios</h2>
-                <p>Especialistas en prototipado, piezas únicas y producción por volumen</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-item">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Impresión 3D PLA/PETG</span>
-                </div>
-                <div class="service-item">
-                    <i class="fa-solid fa-bolt"></i>
-                    <span>Corte y Grabado Láser</span>
-                </div>
-                <div class="service-item">
-                    <i class="fa-solid fa-hat-cowboy"></i>
-                    <span>Gorras & Personalización</span>
-                </div>
-                <div class="service-item">
-                    <i class="fa-solid fa-book-open"></i>
-                    <span>Libretas & Papelería</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Banner de Cotización Especial -->
-        <div class="custom-order-box">
-            <div>
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> ¿Tienes un diseño o STL propio?</h3>
-                <p>Mándanos tus vectores, archivos 3D o idea para cotizar medidas y acabados.</p>
-            </div>
-            <a id="btn-custom-quote" href="https://wa.me/526673538481?text=Hola,%20me%20gustaria%20cotizar%20un%20proyecto%20especial/diseño%20personalizado." target="_blank" class="btn-quote">
-                <i class="fa-solid fa-calculator"></i> Cotizar Proyecto
-            </a>
-        </div>
-
-        <!-- SECCIÓN: CARRUSEL DE TRABAJOS ENTREGADOS -->
-        <section class="gallery-section">
-            <div class="gallery-header">
-                <h2><i class="fa-solid fa-camera-retro" style="color: #38bdf8;"></i> Trabajos Entregados</h2>
-                <p>Proyectos reales listos y entregados a nuestros clientes</p>
-            </div>
-            
-            <div class="carousel-container">
-                <button class="carousel-btn prev-btn" id="carousel-prev"><i class="fa-solid fa-chevron-left"></i></button>
-                
-                <div class="carousel-track-wrapper">
-                    <div class="carousel-track" id="carousel-track">
-                        <!-- Las fotos de entregas se cargan aquí desde JS -->
-                    </div>
-                </div>
-
-                <button class="carousel-btn next-btn" id="carousel-next"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
-        </section>
-
-        <!-- Barra de Búsqueda Estilizada -->
-        <div class="search-container">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="search-input" placeholder="Buscar por producto (ej. llavero, gorra, Pokémon...)" autocomplete="off">
-            <button id="clear-search" class="clear-btn" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
-        <!-- Filtros por Categoría -->
-        <nav class="categories" id="categories-container">
-            <!-- Se carga dinámicamente desde JS -->
-        </nav>
-
-        <!-- Seccion de Filtros -->
-        <div class="filters-container">
-        <!-- 1. Filtrar por Ofertas -->
-        <label class="filter-checkbox">
-            <input type="checkbox" id="filter-offers">
-            <span>🔥 Solo Ofertas</span>
-        </label>
-
-        <!-- 2. Filtrar por Disponibilidad en Tienda -->
-        <label class="filter-checkbox">
-            <input type="checkbox" id="filter-stock">
-            <span>⚡ Entrega Inmediata (En tienda)</span>
-        </label>
-
-        <!-- 3. Filtrar por Precio Máximo -->
-        <div class="filter-price">
-            <label for="filter-max-price">Precio máx: $<span id="price-limit-val">500</span> MXN</label>
-            <input type="range" id="filter-max-price" min="0" max="1000" step="10" value="500">
-        </div>
-        </div>
-
-        <!-- Grid de Productos -->
-        <section class="products-grid" id="products-grid">
-            <p style="color: #94a3b8; grid-column: 1/-1; text-align: center;">Cargando catálogo en vivo...</p>
-        </section>
-    </main>
-
-    <!-- Previsualización de Foto Limpia (Modal) -->
-    <div id="image-modal" class="modal">
-        <div class="modal-wrapper">
-            <img id="modal-img" src="" alt="Previsualización de producto">
-        </div>
+  <!-- Encabezado con Botón de Lupa e Inyección del Panel -->
+  <header class="main-header">
+    <div class="header-content">
+      <h1>Pollería Don Juan</h1>
+      <button id="toggle-search-btn" class="btn-icon" title="Buscar y Filtrar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
     </div>
+    <!-- Contenedor donde JS inyectará el buscador y los filtros -->
+    <div id="search-filter-wrapper"></div>
+  </header>
 
-    <!-- Firebase SDKs (Compat modo global) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <!-- Categorías -->
+  <nav id="categories-container" class="categories-wrapper"></nav>
 
-    <!-- Carga del punto de entrada principal en JS (Modulo) -->
-    <script type="module" src="js/main.js"></script>
+  <!-- Carrusel -->
+  <section id="carousel-container"></section>
+
+  <!-- Grilla de Productos -->
+  <main>
+    <div id="products-grid" class="products-grid"></div>
+  </main>
+
+  <!-- Contenedor para el Modal de Imagen -->
+  <div id="modal-container"></div>
+
+  <!-- Firebase Scripts y Módulo Principal -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
-
-<!-- PIE DE PÁGINA (FOOTER) -->
-    <footer class="main-footer">
-        <div class="footer-links">
-            <a href="#catalogo">Catálogo</a>
-            <a href="#servicios">Servicios</a>
-            <a href="https://wa.me/TU_NUMERO_DE_TELEFONO" target="_blank">Contacto</a>
-            <a href="https://github.com/Calejandro114/MrPolleriaDonJuan" target="_blank">GitHub</a>
-        </div>
-        <div class="footer-copyright">
-            <p>&copy; 2026 Pollería Don Juan & CoolyScrap. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-</body>
-
-
 </html>
