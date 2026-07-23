@@ -5,6 +5,7 @@
     padding: 40px 20px 20px 20px;
     margin-top: 50px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .footer-grid {
@@ -87,4 +88,27 @@
     text-align: center;
     color: #64748b;
     font-size: 0.8rem;
+}
+
+/* ==========================================
+   ADAPTACIÓN PARA CELULARES (PANTALLAS CHICAS)
+   ========================================== */
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 30px 15px 20px 15px;
+    }
+
+    /* Cambia la grilla a 1 sola columna vertical */
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 25px;
+    }
+
+    .footer-col {
+        width: 100%;
+    }
+
+    .footer-bottom {
+        margin-top: 25px;
+    }
 }
