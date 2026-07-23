@@ -1,3 +1,4 @@
+// js/main.js
 import { db } from './firebase-config.js';
 import { renderNavUI } from './ui-nav.js';
 import { renderFooterUI } from './ui-footer.js';
@@ -35,25 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
         aplicarFiltrosYRender(listaProductos);
     });
 
-    // 5. Detectar scroll con zona muerta (Histéresis) para evitar el parpadeo en bucle
-    const mainHeader = document.querySelector(".main-header");
+    // 5. Muestra el mini logo y nombre solo cuando se desplaza hacia abajo
+    const stickyNavbar = document.querySelector(".sticky-navbar");
 
-    if (mainHeader) {
-        let isScrolled = false;
-
+    if (stickyNavbar) {
         window.addEventListener("scroll", () => {
-            const scrollAmount = window.scrollY || document.documentElement.scrollTop;
-
-            // Si bajamos más de 80px y aún no está colapsado -> Encoger
-            if (scrollAmount > 80 && !isScrolled) {
-                isScrolled = true;
-                mainHeader.classList.add("scrolled");
-            } 
-            // Si subimos a menos de 20px y está colapsado -> Volver a agrandar
-            else if (scrollAmount < 20 && isScrolled) {
-                isScrolled = false;
-                mainHeader.classList.remove("scrolled");
-            }
-        });
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            
+            // Distancia en píxeles (altura del hero) para completar la transición
+            const maxScroll = 100; 
+            const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+            
+            stickyNavbar.style.setProperty("--scroll-progress", progress);
+        }, { passive: true });
     }
 });

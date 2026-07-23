@@ -10,19 +10,24 @@
 </head>
 <body>
 
-  <!-- 1. INICIO (Header con Logo, Título y Menú de Navegación) -->
-  <header class="main-header" id="inicio">
-    <div class="header-content">
-      <img src="img/logo.jpg" alt="Pollería Don Juan Logo" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
-      <div class="header-text">
-        <h1>Pollería Don Juan</h1>
-        <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
-      </div>
+  <!-- 1. BLOQUE PRINCIPAL (Se desliza y sale de la pantalla de forma natural) -->
+  <header class="hero-header" id="inicio">
+    <img src="img/logo.jpg" alt="Pollería Don Juan Logo" class="logo-hero" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
+    <div class="hero-text">
+      <h1>Pollería Don Juan</h1>
+      <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
     </div>
-
-    <!-- Menú con el orden exacto propuesto -->
-    <div id="nav-wrapper"></div>
   </header>
+
+  <!-- 2. BARRA DE NAVEGACIÓN PEGAJOSA (Se queda fija en el borde superior al hacer scroll) -->
+  <nav class="sticky-navbar">
+    <div class="nav-brand">
+      <img src="img/logo.jpg" alt="Logo" class="logo-mini" onerror="this.onerror=null; this.src='https://placehold.co/32x32?text=DJ';">
+      <span class="brand-title">Pollería Don Juan</span>
+    </div>
+    <!-- Menú inyectado desde JavaScript con los enlaces -->
+    <div id="nav-wrapper"></div>
+  </nav>
 
   <!-- Contenido Principal -->
   <div class="container">

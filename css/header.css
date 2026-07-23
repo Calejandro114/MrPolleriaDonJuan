@@ -1,109 +1,167 @@
 /* ==========================================
-   HEADER FIJO Y OPACO A PANTALLA COMPLETA
+   0. RESET DE OVERFLOW PARA ASEGURAR STICKY
    ========================================== */
-
-.main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;                  /* Ocupa el 100% de la pantalla de orilla a orilla */
-    max-width: none !important;  /* Quita cualquier límite de ancho al header */
-    z-index: 9999;
-    background-color: #0f172a !important; /* Fondo opaco de lado a lado */
-    padding: 15px 20px 15px 20px;
-    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
+html, body {
+    overflow-x: clip; /* Permite cortar el scroll horizontal sin romper el position sticky */
 }
 
-.header-content {
+/* ==========================================
+   1. BLOQUE PRINCIPAL (HERO / LOGO GRANDE)
+   ========================================== */
+.hero-header {
     width: 100%;
-    max-width: 900px;  /* Limita el ancho para centrar el logo y título */
-    margin: 0 auto;    /* Centra el logo y textos en medio de la pantalla */
+    background-color: #0f172a;
+    padding: 30px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    position: relative;
     text-align: center;
-    transition: all 0.3s ease-in-out;
+    box-sizing: border-box;
 }
 
-/* --- ESTADO INICIAL (GRANDE) --- */
-.logo {
-    width: 110px;
-    height: 110px;
+.logo-hero {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #38bdf8;
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+    margin-bottom: 10px;
 }
 
-.header-text h1 {
-    font-size: 1.8rem;
-    margin: 0;
+.hero-text h1 {
+    font-size: 1.75rem;
     color: #f8fafc;
-    transition: all 0.3s ease-in-out;
+    margin: 0;
+    font-weight: 700;
 }
 
-.header-text .tagline {
+.hero-text .tagline {
     color: #94a3b8;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     margin-top: 4px;
-    transition: all 0.3s ease-in-out;
-}
-
-/* --- ESTILOS DEL CONTENEDOR DEL MENÚ --- */
-#nav-wrapper {
-    width: 100%;
-    transition: all 0.3s ease-in-out;
 }
 
 /* ==========================================
-   ESTADO COMPACTO (AL HACER SCROLL)
+   2. BARRA FIJA SUPERIOR CENTRADA (STICKY NAVBAR)
    ========================================== */
+.sticky-navbar {
+    position: -webkit-sticky; /* Soporte para Safari */
+    position: sticky !important;
+    top: 0 !important;
+    left: 0;
+    width: 100%;
+    z-index: 99999 !important; /* Capa superior para evitar que otros contenedores la tapen */
+    background-color: #0f172a !important;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 10px 24px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-.main-header.scrolled {
-    padding: 8px 20px 10px 20px !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-    border-bottom-color: #334155;
+    /* Variable inyectada por JavaScript (va de 0.0 a 1.0 al hacer scroll) */
+    --progress: var(--scroll-progress, 0);
 }
 
-.main-header.scrolled .header-content {
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px;
+/* 
+   Marca pequeña (Mini Logo + Título):
+   - Arriba del todo (--progress = 0): Oculta, sin ancho y transparente.
+   - Al bajar (--progress > 0): Se expande y aparece suavemente a la izquierda.
+*/
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: calc(12px * var(--progress));
+    opacity: var(--progress);
+    width: calc(230px * var(--progress));
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 0;
+    pointer-events: none; /* Evita clics accidentales cuando está oculta */
 }
 
-.main-header.scrolled .logo {
-    width: 40px;
-    height: 40px;
-    border-width: 2px;
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+/* Habilita los clics cuando ya es visible */
+.sticky-navbar[style*="--scroll-progress: 1"] .nav-brand,
+.sticky-navbar {
+    pointer-events: auto;
 }
 
-.main-header.scrolled .header-text h1 {
+.logo-mini {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #38bdf8;
+    flex-shrink: 0;
+}
+
+.brand-title {
+    font-weight: 700;
     font-size: 1.1rem;
+    color: #f8fafc;
+    white-space: nowrap;
 }
 
-.main-header.scrolled .header-text .tagline {
-    display: none; /* Oculta la descripción para ahorrar espacio vertical */
+/* Menú de navegación CENTRADO */
+#nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Permite que el contenedor tome el centro disponible */
 }
 
-/* Mantiene la barra de navegación compacta y SIEMPRE VISIBLE al bajar */
-.main-header.scrolled #nav-wrapper {
-    margin-top: 6px;
+.main-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Centra los botones internamente */
 }
 
-.main-header.scrolled .main-nav {
-    padding-top: 6px;
-    gap: 8px; /* Reduce ligeramente el espacio entre botones */
+.nav-link {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: #94a3b8;
+    border-radius: 6px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-.main-header.scrolled .nav-link {
-    padding: 4px 10px; /* Botones un poco más compactos al hacer scroll */
-    font-size: 0.8rem;
+.nav-link:hover, 
+.nav-link.active {
+    color: #38bdf8;
+    background-color: rgba(56, 189, 248, 0.15);
+}
+
+/* ==========================================
+   RESPONSIVO PARA CELULARES
+   ========================================== */
+@media (max-width: 768px) {
+    .sticky-navbar {
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 12px;
+    }
+
+    .nav-brand {
+        width: auto !important;
+        justify-content: center;
+    }
+
+    .main-nav {
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .nav-link {
+        padding: 4px 8px;
+        font-size: 0.78rem;
+    }
 }

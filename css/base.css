@@ -21,17 +21,16 @@ html, body {
 body {
     background-color: #0f172a;
     color: #f8fafc;
-    /* Espacio superior para que el header desplegado no tape la sección de Trabajos Reales */
-    padding-top: 300px !important; 
+    /* 💥 IMPORTANTE: Eliminamos el padding-top forzado para usar flujo natural */
+    padding-top: 0 !important; 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Ampliar espacio útil en pantalla */
 .container {
-    max-width: 1280px; /* Pasa de 900px a 1280px para llenar mejor monitores y laptops */
-    width: 95%;        /* Deja margen óptimo en móviles */
+    max-width: 1280px;
+    width: 95%;
     margin: 0 auto;
 }
 
@@ -39,7 +38,7 @@ body {
     display: none !important;
 }
 
-/* Espacio de compensación al hacer clic en enlaces del menú */
+/* Compensación de margen al hacer clic en los enlaces del menú */
 section, main, div[id] {
-    scroll-margin-top: 130px;
+    scroll-margin-top: 90px;
 }
