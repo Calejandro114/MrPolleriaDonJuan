@@ -13,33 +13,41 @@ export function renderProducts(items) {
     }
 
     items.forEach(prod => {
-        let priceHTML = `<div class="product-price">${prod.precioActual || ''}</div>`;
+        const estaEnOferta = prod.enOferta === true;
+        const esAgotado = prod.agotado === true;
+
+        // Lectura limpia en camelCase
+        const precioSinDesc = prod.precioSinDescuento || '';
+        const precioConDesc = prod.precioConDescuento || '';
+
+        // Precio dinámico que se envía al mensaje de WhatsApp
+        const precioFinal = estaEnOferta ? precioConDesc : precioSinDesc;
+
+        // Por defecto (enOferta === false): Muestra solo precioSinDescuento
+        let priceHTML = `<div class="product-price">${precioSinDesc}</div>`;
         let badgeHTML = '';
         let stockHTML = '';
         let buttonHTML = '';
 
-        // Leemos stock de forma segura
-        const rawStock = prod.stock !== undefined ? prod.stock : prod.Stock;
-        const cantidadStock = Number(rawStock);
-        const esAgotado = prod.agotado === true;
-
-        // 1. Manejo de Oferta
-        if (prod.enOferta && prod.precioSinDescuento && !esAgotado) {
+        // Si enOferta === true: Muestra ambos precios y el badge de ¡Oferta!
+        if (estaEnOferta && !esAgotado) {
             priceHTML = `
                 <div class="price-container">
-                    <span class="price-original">${prod.precioSinDescuento}</span>
-                    <span class="price-discount">${prod.precioActual}</span>
+                    <span class="price-original">${precioSinDesc}</span>
+                    <span class="price-discount">${precioConDesc}</span>
                 </div>
             `;
             badgeHTML = `<span class="badge-offer">¡Oferta!</span>`;
         }
 
-        // 2. Manejo de Stock en Tienda
+        // Manejo de Stock
+        const rawStock = prod.stock !== undefined ? prod.stock : prod.Stock;
+        const cantidadStock = Number(rawStock);
+
         if (!isNaN(cantidadStock) && cantidadStock > 0 && !esAgotado) {
             let textoEntrega = "";
             let iconoStock = "";
 
-            // LÓGICA DE STOCK MENOR A 5
             if (cantidadStock < 5) {
                 iconoStock = `<i class="fa-solid fa-fire" style="color: #f59e0b;"></i>`;
                 textoEntrega = cantidadStock === 1 
@@ -61,7 +69,7 @@ export function renderProducts(items) {
                 </div>
             `;
 
-            const message = encodeURIComponent(`Hola! Me interesa el producto (${prod.id || ''}): *${prod.nombre}* (${prod.precioActual}). Quisiera saber si aún está disponible en tienda o si puedo encargarlo sobre pedido.`);
+            const message = encodeURIComponent(`Hola! Me interesa el producto (${prod.id || ''}): *${prod.nombre}* (${precioFinal}). Quisiera saber si aún está disponible en tienda o si puedo encargarlo sobre pedido.`);
             const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
 
             buttonHTML = `
@@ -70,8 +78,10 @@ export function renderProducts(items) {
                 </a>
             `;
         } else {
-            // SOBRE PEDIDO / SIN STOCK EN TIENDA
-            badgeHTML = `<span class="badge-offer badge-custom-order">Sobre Pedido</span>`;
+            // SOBRE PEDIDO / SIN STOCK
+            if (!estaEnOferta) {
+                badgeHTML = `<span class="badge-offer badge-custom-order">Sobre Pedido</span>`;
+            }
             stockHTML = `
                 <div class="stock-count" style="color: #38bdf8;">
                     <div class="stock-main">
@@ -83,7 +93,7 @@ export function renderProducts(items) {
                 </div>
             `;
 
-            const message = encodeURIComponent(`Hola! Vi que el producto (${prod.id || ''}): *${prod.nombre}* (${prod.precioActual}) no tiene stock en tienda. Me gustaría encargar piezas sobre pedido.`);
+            const message = encodeURIComponent(`Hola! Vi que el producto (${prod.id || ''}): *${prod.nombre}* (${precioFinal}) no tiene stock en tienda. Me gustaría encargar piezas sobre pedido.`);
             const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
 
             buttonHTML = `
@@ -114,12 +124,13 @@ export function renderProducts(items) {
             </div>
         `;
 
-        // Previsualización limpia al tocar la imagen
         const imgElement = card.querySelector('.card-image-wrapper img');
-        imgElement.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openModal(prod.imagen);
-        });
+        if (imgElement) {
+            imgElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(prod.imagen);
+            });
+        }
 
         productsGrid.appendChild(card);
     });

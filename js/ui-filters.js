@@ -123,7 +123,9 @@ export function aplicarFiltrosYRender(listaProductos) {
         const maxVal = Number(rangePrecio.value);
         if (lblPrecioVal) lblPrecioVal.textContent = maxVal;
         resultado = resultado.filter(p => {
-            const precioNum = Number(String(p.precioActual || 0).replace(/[^0-9.]/g, ''));
+            // Evaluamos precioConDescuento si está en oferta, si no precioSinDescuento
+            const valorPrecio = (p.enOferta && p.precioConDescuento) ? p.precioConDescuento : (p.precioSinDescuento || 0);
+            const precioNum = Number(String(valorPrecio).replace(/[^0-9.]/g, ''));
             return precioNum <= maxVal;
         });
     }
