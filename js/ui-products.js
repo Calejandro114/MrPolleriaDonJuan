@@ -64,7 +64,7 @@ export function renderProducts(items) {
                         ${iconoStock} ${textoEntrega}
                     </div>
                     <div class="custom-order-hint">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> O encarga la cantidad que necesites
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Encarga la cantidad que necesites
                     </div>
                 </div>
             `;
