@@ -10,15 +10,24 @@ export function renderFooterUI() {
             <div class="footer-grid">
                 
                 <!-- Sección 1: Redes y Contacto -->
-                <div class="footer-col" id="contacto">
+                <div class="footer-col">
                     <h3>Pollería Don Juan</h3>
                     <p class="footer-desc">Creaciones personalizadas en impresión 3D, corte láser, papelería y coleccionables.</p>
-                    <div class="footer-socials">
-                        <a href="https://wa.me/${WHATSAPP_PHONE}" target="_blank" class="btn-social btn-wa">
-                            <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+                    
+                    <div class="footer-socials-cards">
+                        <a href="https://wa.me/526673538481" target="_blank" class="social-card wa">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <div class="card-text">
+                                <span class="card-title">WhatsApp</span>
+                                <span class="card-subtitle">Cotiza o pide por mensaje</span>
+                            </div>
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="btn-social btn-ig">
-                            <i class="fa-brands fa-instagram"></i> Siguenos en Instagram
+                        <a href="https://instagram.com/mr.polleriadonjuan/" target="_blank" class="social-card ig">
+                            <i class="fa-brands fa-instagram"></i>
+                            <div class="card-text">
+                                <span class="card-title">Instagram</span>
+                                <span class="card-subtitle">Ver catálogo de trabajos</span>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -51,6 +60,14 @@ export function renderFooterUI() {
                     <details class="faq-item">
                         <summary>¿Cómo encargo un producto agotado?</summary>
                         <p>Toca el botón "Encargar sobre Pedido" para enviarnos mensaje directo con tu ID de producto.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>¿Qué tamaño son las figuras?</summary>
+                        <p>Todos los tamaños son personalizados y varian entre 1cm a 20cm de altura.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>¿Cuánto tarda en imprimirse una pieza personalizada?</summary>
+                        <p>Si no requiere modificaciones adicionales, el tiempo de impresión varía entre 24 y 72 horas.</p>
                     </details>
                 </div>
 
