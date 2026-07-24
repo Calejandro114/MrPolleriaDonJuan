@@ -10,8 +10,8 @@ export function renderFooterUI() {
             <div class="footer-grid">
                 
                 <!-- Sección 1: Redes y Contacto -->
-                <div class="footer-col">
-                    <h3>Pollería Don Juan</h3>
+                <div class="footer-col" id="contacto">
+                    <h3>Mr. Pollería Don Juan</h3>
                     <p class="footer-desc">Creaciones personalizadas en impresión 3D, corte láser, papelería y coleccionables.</p>
                     
                     <div class="footer-socials-cards">

@@ -1,201 +1,324 @@
-.search-container {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 12px 40px 12px 42px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    color: #f8fafc;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -webkit-appearance: none;
-}
-
-.search-container input::placeholder {
-    color: #64748b;
-}
-
-.search-container input:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-}
-
-.search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    pointer-events: none;
-}
-
-.clear-btn {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #94a3b8;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 4px;
-}
-
-/* Transición para el panel desplegable de la lupa */
-.search-filter-panel {
-    animation: fadeIn 0.2s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================
-   ESTILOS DE LUPA Y PANEL DESPLEGABLE
-   ========================================== */
-
-/* Botón de la Lupa */
-.btn-icon {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    color: #38bdf8;
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.btn-icon:hover {
-    background-color: #38bdf8;
-    color: #0f172a;
-    border-color: #38bdf8;
-    transform: scale(1.05);
-}
-
-/* Alineación en el Header */
-.main-header {
-    width: 100%;
-    max-width: 900px;
-    margin-bottom: 20px;
-}
-
-.header-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    position: relative;
-}
-
-/* Panel Desplegable de Filtros */
-.search-filter-panel {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 15px;
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-}
-
-/* Opciones de Filtros */
-.filters-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 10px;
-    border-top: 1px solid #334155;
-}
-
-.filter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #cbd5e1;
-}
-
-.filter-checkbox input[type="checkbox"] {
-    accent-color: #38bdf8;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.filter-price {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    color: #cbd5e1;
-}
-
-.filter-price input[type="range"] {
-    accent-color: #38bdf8;
-    cursor: pointer;
-}
-
-/* ==========================================
-   SECCIÓN DE BÚSQUEDA SOBRE LOS PRODUCTOS
-   ========================================== */
+/* css/filters.css - Rediseño UI/UX de Búsqueda y Filtros */
 
 .search-section-wrapper {
-    margin: 25px 0 15px 0;
+    margin: 20px 0;
     width: 100%;
 }
 
+/* Barra Principal Interactiva */
 .search-bar-trigger {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #1e293b;
     border: 1px solid #334155;
-    padding: 10px 18px;
-    border-radius: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-bar-trigger:hover {
+    border-color: #38bdf8;
 }
 
 .search-label {
-    color: #94a3b8;
-    font-size: 0.9rem;
+    color: #f8fafc;
+    font-size: 0.95rem;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
-/* Botón de la Lupa */
+.search-label i {
+    color: #38bdf8;
+}
+
 #toggle-search-btn.btn-icon {
-    position: static !important; /* Anula las posiciones absolutas previas */
-    transform: none !important;
     background-color: #38bdf8;
     color: #0f172a;
     border: none;
-    padding: 8px 14px;
+    padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
+    font-weight: 700;
     transition: all 0.2s ease;
 }
 
 #toggle-search-btn.btn-icon:hover {
     background-color: #0284c7;
     color: #ffffff;
-    transform: scale(1.05) !important;
+    transform: scale(1.05);
+}
+
+/* Panel Desplegable */
+.search-filter-panel {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    animation: slideDown 0.25s ease-out;
+}
+
+.search-filter-panel.hidden {
+    display: none !important;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input de Búsqueda Integrado */
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon-inside {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 42px;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 0.92rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input-wrapper input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+.clear-btn-inside {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #334155;
+    border: none;
+    color: #f8fafc;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+/* Grupo de Filtros (Chips y Presupuesto) */
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #334155;
+}
+
+.filter-chips-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Botones Interactivos (Chips) */
+.filter-chip {
+    position: relative;
+    cursor: pointer;
+}
+
+.filter-chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chip-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.filter-chip:hover .chip-content {
+    border-color: #38bdf8;
+    color: #f8fafc;
+}
+
+.filter-chip input:checked + .chip-content {
+    background-color: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* Presupuesto Directo */
+.filter-budget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.budget-label {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.budget-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4px 10px;
+    transition: border-color 0.2s;
+}
+
+.budget-input-wrapper:focus-within {
+    border-color: #38bdf8;
+}
+
+.currency-symbol {
+    color: #38bdf8;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-right: 4px;
+}
+
+.currency-tag {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.budget-input-wrapper input {
+    width: 70px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f8fafc;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Quita las flechitas por defecto de los inputs number */
+.budget-input-wrapper input::-webkit-outer-spin-button,
+.budget-input-wrapper input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Responsivo para celulares */
+@media (max-width: 640px) {
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-budget {
+        justify-content: space-between;
+    }
+}
+
+/* Tarjeta de No Resultados por Presupuesto */
+.empty-budget-card {
+    grid-column: 1 / -1; /* Ocupa todo el ancho de la grilla */
+    background-color: #1e293b;
+    border: 1px dashed #38bdf8;
+    border-radius: 16px;
+    padding: 35px 20px;
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.empty-budget-card .empty-icon {
+    font-size: 2.5rem;
+    color: #38bdf8;
+    margin-bottom: 5px;
+}
+
+.empty-budget-card h3 {
+    color: #f8fafc;
+    font-size: 1.15rem;
+    margin: 0;
+}
+
+.empty-budget-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    max-width: 500px;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.empty-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-contact:hover {
+    transform: scale(1.04);
+}
+
+.btn-wa {
+    background-color: #25D366;
+    color: #ffffff;
+}
+
+.btn-ig {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff;
 }

@@ -11,27 +11,36 @@ export function renderFiltersUI() {
 
     wrapper.innerHTML = `
         <div id="search-filter-panel" class="search-filter-panel hidden">
-            <!-- Buscador por texto -->
+            
+            <!-- Barra Superior Unificada (Input de Búsqueda) -->
             <div class="search-input-wrapper">
-                <input type="text" id="search-input" placeholder="Buscar por nombre, ID o descripción..." />
-                <button id="clear-search" style="display: none;">&times;</button>
+                <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
+                <input type="text" id="search-input" placeholder="Buscar producto, anime, ID o descripción..." />
+                <button id="clear-search" class="clear-btn-inside" style="display: none;" title="Limpiar búsqueda">&times;</button>
             </div>
 
-            <!-- Controles de Filtro Avanzado -->
+            <!-- Controles de Filtro Avanzado (Chips & Presupuesto) -->
             <div class="filters-container">
-                <label class="filter-checkbox">
-                    <input type="checkbox" id="filter-offers">
-                    <span>🔥 Solo Ofertas</span>
-                </label>
+                <div class="filter-chips-group">
+                    <label class="filter-chip">
+                        <input type="checkbox" id="filter-offers">
+                        <span class="chip-content"><i class="fa-solid fa-fire"></i> Solo Ofertas</span>
+                    </label>
 
-                <label class="filter-checkbox">
-                    <input type="checkbox" id="filter-stock">
-                    <span>⚡ Entrega Inmediata</span>
-                </label>
+                    <label class="filter-chip">
+                        <input type="checkbox" id="filter-stock">
+                        <span class="chip-content"><i class="fa-solid fa-bolt"></i> Entrega Inmediata</span>
+                    </label>
+                </div>
 
-                <div class="filter-price">
-                    <label for="filter-max-price">Precio máx: $<span id="price-limit-val">500</span> MXN</label>
-                    <input type="range" id="filter-max-price" min="0" max="1000" step="10" value="500">
+                <!-- Input de Presupuesto Directo por Texto -->
+                <div class="filter-budget">
+                    <span class="budget-label"><i class="fa-solid fa-wallet"></i> Presupuesto máx:</span>
+                    <div class="budget-input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="filter-max-price" placeholder="Ej. 150" min="0" step="5" />
+                        <span class="currency-tag">MXN</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,14 +60,14 @@ export function initFilterListeners(onFilterChange) {
     const clearSearchBtn = document.getElementById("clear-search");
     const chkOfertas = document.getElementById("filter-offers");
     const chkStock = document.getElementById("filter-stock");
-    const rangePrecio = document.getElementById("filter-max-price");
+    const inputPrecio = document.getElementById("filter-max-price");
 
-    // Toggle de la Lupa (Ocultar/Mostrar)
+    // Toggle de la Lupa / Menú Desplegable
     if (toggleSearchBtn && searchFilterPanel) {
         toggleSearchBtn.addEventListener("click", () => {
             searchFilterPanel.classList.toggle("hidden");
             if (!searchFilterPanel.classList.contains("hidden") && searchInput) {
-                searchInput.focus(); // Foco automático al abrir
+                searchInput.focus();
             }
         });
     }
@@ -67,7 +76,7 @@ export function initFilterListeners(onFilterChange) {
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
             textoBusqueda = e.target.value;
-            if (clearSearchBtn) clearSearchBtn.style.display = textoBusqueda.length > 0 ? "block" : "none";
+            if (clearSearchBtn) clearSearchBtn.style.display = textoBusqueda.length > 0 ? "flex" : "none";
             onFilterChange();
         });
     }
@@ -83,7 +92,7 @@ export function initFilterListeners(onFilterChange) {
 
     if (chkOfertas) chkOfertas.addEventListener("change", onFilterChange);
     if (chkStock) chkStock.addEventListener("change", onFilterChange);
-    if (rangePrecio) rangePrecio.addEventListener("input", onFilterChange);
+    if (inputPrecio) inputPrecio.addEventListener("input", onFilterChange);
 }
 
 // 3. Lógica de Filtrado
@@ -117,18 +126,53 @@ export function aplicarFiltrosYRender(listaProductos) {
         });
     }
 
-    const rangePrecio = document.getElementById("filter-max-price");
-    const lblPrecioVal = document.getElementById("price-limit-val");
-    if (rangePrecio) {
-        const maxVal = Number(rangePrecio.value);
-        if (lblPrecioVal) lblPrecioVal.textContent = maxVal;
-        resultado = resultado.filter(p => {
-            // Evaluamos precioConDescuento si está en oferta, si no precioSinDescuento
-            const valorPrecio = (p.enOferta && p.precioConDescuento) ? p.precioConDescuento : (p.precioSinDescuento || 0);
-            const precioNum = Number(String(valorPrecio).replace(/[^0-9.]/g, ''));
-            return precioNum <= maxVal;
-        });
+    // Filtrado por Presupuesto Escrito
+    const inputPrecio = document.getElementById("filter-max-price");
+    let presupuestoIngresado = false;
+    let maxVal = 0;
+
+    if (inputPrecio && inputPrecio.value.trim() !== "") {
+        maxVal = Number(inputPrecio.value);
+        if (!isNaN(maxVal) && maxVal >= 0) {
+            presupuestoIngresado = true;
+            resultado = resultado.filter(p => {
+                const valorPrecio = (p.enOferta && p.precioConDescuento) ? p.precioConDescuento : (p.precioSinDescuento || 0);
+                const precioNum = Number(String(valorPrecio).replace(/[^0-9.]/g, ''));
+                return precioNum <= maxVal;
+            });
+        }
     }
 
-    renderProducts(resultado);
+    // Evaluación para renderizar productos o el mensaje personalizado de presupuesto
+    if (resultado.length === 0 && presupuestoIngresado) {
+        renderNoResultsBudget(maxVal);
+    } else {
+        renderProducts(resultado);
+    }
+}
+
+// Función auxiliar para renderizar el mensaje personalizado cuando no hay stock en el rango de precio
+function renderNoResultsBudget(presupuesto) {
+    const grid = document.getElementById("products-grid");
+    if (!grid) return;
+
+    // Configura tus enlaces/datos de contacto directos
+    const whatsappLink = `https://wa.me/526673538481?text=${encodeURIComponent(`Hola, estuve viendo la página y busco un producto con presupuesto de $${presupuesto} MXN.`)}`;
+    const instagramLink = "https://instagram.com/mr.polleriadonjuan"; 
+
+    grid.innerHTML = `
+        <div class="empty-budget-card">
+            <div class="empty-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <h3>Por el momento no tenemos un producto en página que cumpla con ese precio</h3>
+            <p>¡Pero si nos contactas veremos cómo solucionarte! Hacemos pedidos personalizados que se adaptan a tu presupuesto.</p>
+            <div class="empty-actions">
+                <a href="${whatsappLink}" target="_blank" rel="noopener noreferrer" class="btn-contact btn-wa">
+                    <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
+                </a>
+                <a href="${instagramLink}" target="_blank" rel="noopener noreferrer" class="btn-contact btn-ig">
+                    <i class="fa-brands fa-instagram"></i> Mensaje por Instagram
+                </a>
+            </div>
+        </div>
+    `;
 }
