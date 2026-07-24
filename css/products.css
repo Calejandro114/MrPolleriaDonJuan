@@ -1,10 +1,15 @@
 /* css/products.css */
 
+/* css/products.css */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Tarjetas un poco más anchas */
     gap: 24px; /* Mayor separación entre tarjetas */
     width: 100%;
+
+    /* ⬇️ AGREGA ESTA LÍNEA PARA SEPARARLO DE LAS CATEGORÍAS ⬇️ */
+    margin-top: 20px; 
 }
 
 .product-card {

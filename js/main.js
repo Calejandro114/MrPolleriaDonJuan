@@ -1,4 +1,3 @@
-// js/main.js
 import { db } from './firebase-config.js';
 import { renderNavUI } from './ui-nav.js';
 import { renderFooterUI } from './ui-footer.js';
@@ -11,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let listaProductos = [];
 
     // 1. Inicializar UI e inyectar HTML de módulos
-    renderNavUI();    // 👈 Inyecta el menú de navegación superior
-    renderFooterUI(); // 👈 Inyecta el pie de página
+    renderNavUI();    
+    renderFooterUI(); 
     initModal();
     initCarousel();
-    renderFiltersUI(); // Inyecta el HTML del panel desplegable de búsqueda
+    renderFiltersUI(); 
 
     // 2. Inicializar Categorías
     initCategories((categoriaSeleccionada) => {
@@ -36,18 +35,23 @@ document.addEventListener("DOMContentLoaded", () => {
         aplicarFiltrosYRender(listaProductos);
     });
 
-    // 5. Muestra el mini logo y nombre solo cuando se desplaza hacia abajo
+    // 5. Scroll progresivo para la animación de la Navbar y cambio de color
+    const heroHeader = document.getElementById('inicio');
     const stickyNavbar = document.querySelector(".sticky-navbar");
 
-    if (stickyNavbar) {
+    if (stickyNavbar && heroHeader) {
         window.addEventListener("scroll", () => {
             const scrollY = window.scrollY || document.documentElement.scrollTop;
-            
-            // Distancia en píxeles (altura del hero) para completar la transición
-            const maxScroll = 100; 
+            const maxScroll = heroHeader.offsetHeight || 250; 
             const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
             
             stickyNavbar.style.setProperty("--scroll-progress", progress);
+
+            if (progress >= 1) {
+                stickyNavbar.classList.add('navbar-scrolled');
+            } else {
+                stickyNavbar.classList.remove('navbar-scrolled');
+            }
         }, { passive: true });
     }
 });

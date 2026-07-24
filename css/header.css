@@ -10,14 +10,36 @@ html, body {
    ========================================== */
 .hero-header {
     width: 100%;
-    background-color: #0f172a;
+    min-height: 250px;
     padding: 30px 20px 20px 20px;
+    box-sizing: border-box;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    box-sizing: border-box;
+    
+    /* Carga la imagen para Móvil */
+    background-image: 
+        linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+        url('../img/banner-mobile.webp'); 
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* 💻 VERSIÓN PARA PANTALLAS GRANDES (LAPTOPS Y PC) */
+@media (min-width: 768px) {
+    .hero-header {
+        min-height: 350px; /* Más altura en pantallas grandes */
+
+        /* El navegador cambia a la imagen de Desktop si la pantalla mide 768px o más */
+        background-image: 
+            linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+            url('../img/banner-desktop.webp');
+    }
 }
 
 .logo-hero {
@@ -47,31 +69,29 @@ html, body {
    2. BARRA FIJA SUPERIOR CENTRADA (STICKY NAVBAR)
    ========================================== */
 .sticky-navbar {
-    position: -webkit-sticky; /* Soporte para Safari */
+    position: -webkit-sticky;
     position: sticky !important;
     top: 0 !important;
     left: 0;
     width: 100%;
-    z-index: 99999 !important; /* Capa superior para evitar que otros contenedores la tapen */
-    background-color: #0f172a !important;
-    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    z-index: 99999 !important;
+    
+    /* Transición de Color de la Navbar */
+    background-color: color-mix(in srgb, #1c2541 calc(var(--progress) * 100%), #0f172a) !important;
+    
+    border-bottom: 1px solid rgba(51, 65, 85, calc(0.2 + (var(--progress) * 0.3)));
     padding: 10px 24px;
     box-sizing: border-box;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, calc(var(--progress) * 0.6));
     
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    /* Variable inyectada por JavaScript (va de 0.0 a 1.0 al hacer scroll) */
     --progress: var(--scroll-progress, 0);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 
-   Marca pequeña (Mini Logo + Título):
-   - Arriba del todo (--progress = 0): Oculta, sin ancho y transparente.
-   - Al bajar (--progress > 0): Se expande y aparece suavemente a la izquierda.
-*/
 .nav-brand {
     display: flex;
     align-items: center;
@@ -81,10 +101,9 @@ html, body {
     overflow: hidden;
     white-space: nowrap;
     flex-shrink: 0;
-    pointer-events: none; /* Evita clics accidentales cuando está oculta */
+    pointer-events: none;
 }
 
-/* Habilita los clics cuando ya es visible */
 .sticky-navbar[style*="--scroll-progress: 1"] .nav-brand,
 .sticky-navbar {
     pointer-events: auto;
@@ -106,12 +125,11 @@ html, body {
     white-space: nowrap;
 }
 
-/* Menú de navegación CENTRADO */
 #nav-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Permite que el contenedor tome el centro disponible */
+    flex-grow: 1;
 }
 
 .main-nav {
@@ -119,7 +137,7 @@ html, body {
     gap: 8px;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center; /* Centra los botones internamente */
+    justify-content: center;
 }
 
 .nav-link {
@@ -139,9 +157,7 @@ html, body {
     background-color: rgba(56, 189, 248, 0.15);
 }
 
-/* ==========================================
-   RESPONSIVO PARA CELULARES
-   ========================================== */
+/* RESPONSIVO PARA CELULARES */
 @media (max-width: 768px) {
     .sticky-navbar {
         flex-direction: column;
@@ -164,4 +180,31 @@ html, body {
         padding: 4px 8px;
         font-size: 0.78rem;
     }
+}
+
+/* Tarjeta central sobre el banner */
+.hero-card {
+    /* 1. Fondo CASI transparente (solo 15% - 20% de opacidad) */
+    background: rgba(15, 23, 42, 0.20); 
+
+    /* 2. Desenfoque borroso INTENSO (hace el efecto vidrio) */
+    backdrop-filter: blur(2px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%); /* Para Safari e iOS */
+
+    /* 3. Borde fino muy sutil para dar la sensación de filo de cristal */
+    border: 1px solid rgba(255, 255, 255, 0.18); 
+
+    /* 4. Bordes redondeados y espacio interno */
+    border-radius: 20px;
+    padding: 24px 36px;
+    
+    /* 5. Sombra suave para despegar el vidrio del fondo */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+
+    /* Alineación */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 90%;
 }
