@@ -1,14 +1,22 @@
-import { openModal } from './ui-modal.js';
+/* js/paginas/productos/ui-products.js */
+import { openModal } from '../../componentes/ui-modal.js';
 
 const WHATSAPP_PHONE = "526673538481"; 
-const productsGrid = document.getElementById("products-grid");
 
-export function renderProducts(items) {
-    if (!productsGrid) return;
-    productsGrid.innerHTML = "";
+/**
+ * Renderiza tarjetas de producto en el contenedor especificado o por defecto.
+ * @param {Array} items - Lista de productos.
+ * @param {HTMLElement|null} customContainer - Elemento DOM donde inyectar la grilla.
+ */
+export function renderProductsUI(items, customContainer = null) {
+    // Si no se pasa un contenedor específico, busca el de por defecto 'products-grid'
+    const targetGrid = customContainer || document.getElementById("products-grid");
 
-    if (items.length === 0) {
-        productsGrid.innerHTML = `<p style="color: #94a3b8; grid-column: 1/-1; text-align: center;">No se encontraron productos coincidentes.</p>`;
+    if (!targetGrid) return;
+    targetGrid.innerHTML = "";
+
+    if (!items || items.length === 0) {
+        targetGrid.innerHTML = `<p style="color: #94a3b8; grid-column: 1/-1; text-align: center;">No se encontraron productos coincidentes.</p>`;
         return;
     }
 
@@ -132,6 +140,9 @@ export function renderProducts(items) {
             });
         }
 
-        productsGrid.appendChild(card);
+        targetGrid.appendChild(card);
     });
 }
+
+// Mantener alias por retrocompatibilidad con scripts antiguos que usen 'renderProducts'
+export const renderProducts = renderProductsUI;

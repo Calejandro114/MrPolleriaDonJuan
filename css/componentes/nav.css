@@ -1,0 +1,107 @@
+/* css/componentes/nav.css */
+
+/* 1. BARRA PEGAJOSA CONTENEDORA */
+.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 8px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra los elementos por defecto */
+
+    /* El fondo oscuro de la barra se va intensificando al bajar */
+    background-color: rgba(15, 23, 42, calc(var(--scroll-progress, 0) * 0.95));
+    backdrop-filter: blur(8px);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    border-bottom: 1px solid rgba(51, 65, 85, calc(var(--scroll-progress, 0) * 0.5));
+}
+
+/* 2. MARCA (LOGO MINI + TEXTO) -> Esto es lo ÚNICO que se oculta arriba */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    left: 20px;
+
+    /* Opacidad y animación vinculadas al scroll */
+    opacity: var(--scroll-progress, 0);
+    transform: translateX(calc((1 - var(--scroll-progress, 0)) * -20px));
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none; /* Evita clics si está invisible */
+}
+
+/* Hacer la marca interactiva solo cuando es visible */
+.navbar-scrolled .nav-brand {
+    pointer-events: auto;
+}
+
+.logo-mini {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #38bdf8;
+}
+
+.brand-title {
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* 3. CONTENEDOR Y ENLACES DEL MENÚ (SIEMPRE VISIBLES) */
+/* css/componentes/nav.css */
+
+/* Contenedor del menú */
+#nav-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* Transición suave para cuando cambie la distancia */
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cuando el usuario baja (scroll > maxScroll), empujamos el menú a la derecha */
+.navbar-scrolled #nav-wrapper {
+    /* Ajusta este valor (200px a 240px) según el ancho que ocupe tu logo + nombre */
+    margin-left: 220px; 
+}
+
+/* En pantallas pequeñas (celulares) evitamos desplazarlo para que no se amontone */
+@media (max-width: 768px) {
+    .navbar-scrolled #nav-wrapper {
+        margin-left: 0;
+    }
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #38bdf8;
+    background-color: rgba(56, 189, 248, 0.1);
+}

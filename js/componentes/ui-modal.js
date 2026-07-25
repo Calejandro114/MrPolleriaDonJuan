@@ -1,12 +1,19 @@
-// js/ui-modal.js
+/* js/componentes/ui-modal.js */
 
 export function initModal() {
     const container = document.getElementById("modal-container");
     if (!container) return;
 
-    // Escuchar clic fuera de la imagen para cerrar
+    // Escuchar clic fuera de la imagen o en la 'X' para cerrar
     container.addEventListener("click", (e) => {
         if (e.target.classList.contains("modal-overlay") || e.target.classList.contains("modal-close")) {
+            closeModal();
+        }
+    });
+
+    // Cerrar también al presionar la tecla Escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
             closeModal();
         }
     });

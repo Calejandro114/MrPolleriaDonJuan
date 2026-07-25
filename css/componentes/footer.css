@@ -1,9 +1,10 @@
-/* css/footer.css */
+/* css/componentes/footer.css */
+
 .main-footer {
     border-top: 1px solid #334155;
     background-color: #0f172a;
-    padding: 40px 20px 20px 20px;
-    margin-top: 50px;
+    padding: 50px 24px 24px 24px; /* Mayor espacio superior y lateral base */
+    margin-top: 60px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -12,8 +13,9 @@
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+    width: 100%;
 }
 
 .footer-col h3 {
@@ -83,36 +85,12 @@
 .footer-bottom {
     max-width: 1200px;
     margin: 30px auto 0 auto;
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 1px solid #1e293b;
     text-align: center;
     color: #64748b;
     font-size: 0.8rem;
 }
-
-/* ==========================================
-   ADAPTACIÓN PARA CELULARES (PANTALLAS CHICAS)
-   ========================================== */
-@media (max-width: 768px) {
-    .main-footer {
-        padding: 30px 15px 20px 15px;
-    }
-
-    /* Cambia la grilla a 1 sola columna vertical */
-    .footer-grid {
-        grid-template-columns: 1fr !important;
-        gap: 25px;
-    }
-
-    .footer-col {
-        width: 100%;
-    }
-
-    .footer-bottom {
-        margin-top: 25px;
-    }
-}
-
 
 /* ==========================================
    TARJETAS DE CONTACTO DIRECTO EN FOOTER
@@ -131,7 +109,7 @@
     gap: 12px;
     padding: 10px 14px;
     border-radius: 8px;
-    text-decoration: none !important; /* Quita el subrayado feo */
+    text-decoration: none !important;
     transition: all 0.25s ease;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -182,4 +160,35 @@
     color: #ffffff !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3);
+}
+
+/* ==========================================
+   RESPONSIVO PARA LAPTOPS Y PANTALLAS GRANDES (>= 1024px)
+   ========================================== */
+@media (min-width: 1024px) {
+    .main-footer {
+        padding: 50px 60px 24px 60px; /* 👈 Da 60px de margen interno lateral en Laptops */
+    }
+}
+
+/* ==========================================
+   ADAPTACIÓN PARA CELULARES (PANTALLAS CHICAS)
+   ========================================== */
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 30px 16px 20px 16px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 25px;
+    }
+
+    .footer-col {
+        width: 100%;
+    }
+
+    .footer-bottom {
+        margin-top: 25px;
+    }
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseñas | Mr. Pollería Don Juan</title>
+  <link rel="icon" type="image/webp" href="../img/logo.webp?v=2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Componentes Base -->
+  <link rel="stylesheet" href="../css/globales/base.css">
+  <link rel="stylesheet" href="../css/globales/layout.css">
+  <link rel="stylesheet" href="../css/componentes/buttons.css">
+  <link rel="stylesheet" href="../css/componentes/nav.css">
+  <link rel="stylesheet" href="../css/componentes/modal.css">
+  <link rel="stylesheet" href="../css/componentes/footer.css">
+
+  <!-- Header / Hero Banner -->
+  <link rel="stylesheet" href="../css/paginas/inicio/header.css">
+</head>
+<body>
+
+  <!-- HERO HEADER -->
+  <header class="hero-header" id="inicio">
+    <div class="hero-card">
+      <img src="../img/logo.webp" alt="Logo" class="logo-hero" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
+      <div class="hero-text">
+        <h1>Mr. Pollería Don Juan</h1>
+        <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav class="sticky-navbar">
+    <div class="nav-brand">
+      <img src="../img/logo.webp" alt="Logo" class="logo-mini" onerror="this.onerror=null; this.src='https://placehold.co/32x32?text=DJ';">
+      <span class="brand-title">Mr.Pollería Don Juan</span>
+    </div>
+    <div id="nav-wrapper"></div>
+  </nav>
+
+  <!-- CONTENIDO DE RESEÑAS -->
+  <div class="container" style="margin-top: 30px;">
+    <h2>Opiniones de Nuestros Clientes</h2>
+    <p style="color: #94a3b8;">Aquí se mostrarán las reseñas y fotos de entregas...</p>
+  </div>
+
+  <!-- FOOTER Y MODAL -->
+  <div id="footer-container"></div>
+  <div id="modal-container"></div>
+
+  <script type="module" src="../js/paginas/resenas/main-resenas.js"></script>
+</body>
+</html>

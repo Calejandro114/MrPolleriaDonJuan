@@ -1,0 +1,21 @@
+/* css/globales/styles.css */
+
+/* 1. Globales */
+@import 'base.css';
+@import 'layout.css';
+
+/* 2. Componentes Compartidos */
+@import '../componentes/buttons.css';
+@import '../componentes/nav.css';
+@import '../componentes/modal.css';
+@import '../componentes/footer.css';
+
+/* 3. Estilos de la Vista de Inicio */
+@import '../paginas/inicio/header.css';
+@import '../paginas/inicio/banners.css';
+@import '../paginas/inicio/carousel.css';
+
+/* 4. Estilos de la Vista de Productos */
+@import '../paginas/productos/categories.css';
+@import '../paginas/productos/filters.css';
+@import '../paginas/productos/products.css';

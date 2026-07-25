@@ -1,5 +1,4 @@
-// js/ui-carousel.js
-import { openModal } from './ui-modal.js';
+import { openModal } from '../../componentes/ui-modal.js';
 
 const entregasReales = [
     {
