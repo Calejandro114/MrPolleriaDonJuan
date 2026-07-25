@@ -20,9 +20,29 @@ export function renderProductsUI(items, customContainer = null) {
         return;
     }
 
+    // Detectar si la página se está ejecutando desde una subcarpeta (ej. /paginas/)
+    const esSubcarpeta = window.location.pathname.includes('/paginas/');
+    const fallbackImage = esSubcarpeta ? '../img/notFound.jpg' : 'img/notFound.jpg';
+
     items.forEach(prod => {
         const estaEnOferta = prod.enOferta === true;
         const esAgotado = prod.agotado === true;
+
+        // Normalización inteligente de la ruta de la imagen
+        let imgSrc = prod.imagen || fallbackImage;
+
+        // Si es una ruta local y estamos en subcarpeta, anteponemos ../
+        if (
+            imgSrc && 
+            !imgSrc.startsWith('http') && 
+            !imgSrc.startsWith('data:') && 
+            !imgSrc.startsWith('/') && 
+            !imgSrc.startsWith('../')
+        ) {
+            if (esSubcarpeta) {
+                imgSrc = '../' + imgSrc;
+            }
+        }
 
         // Lectura limpia en camelCase
         const precioSinDesc = prod.precioSinDescuento || '';
@@ -116,7 +136,7 @@ export function renderProductsUI(items, customContainer = null) {
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${badgeHTML}
-                <img src="${prod.imagen}" alt="${prod.nombre}" onerror="this.onerror=null; this.src='img/notFound.jpg';">
+                <img src="${imgSrc}" alt="${prod.nombre}" onerror="this.onerror=null; this.src='${fallbackImage}';">
             </div>
             <div class="product-info">
                 <div>
@@ -136,7 +156,7 @@ export function renderProductsUI(items, customContainer = null) {
         if (imgElement) {
             imgElement.addEventListener('click', (e) => {
                 e.stopPropagation();
-                openModal(prod.imagen);
+                openModal(imgSrc);
             });
         }
 

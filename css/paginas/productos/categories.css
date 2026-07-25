@@ -1,25 +1,38 @@
-.categories {
-    display: flex;
-    gap: 10px;
+/* css/paginas/productos/categories.css */
+
+/* Unificamos todas las variantes de nombres/IDs que pueda tener el contenedor */
+.categories, 
+.categories-wrapper, 
+#categories-container {
+    display: flex !important;
+    align-items: center;
+    gap: 4px !important; /* Separación limpia y uniforme entre cada cápsula */
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding: 6px 4px 12px 4px;
     margin-bottom: 20px;
     scrollbar-width: thin;
 }
 
-.btn-category {
+/* Unificamos las clases de los botones y limpiamos márgenes rebeldes */
+.btn-category, 
+.category-btn {
     background-color: #1e293b;
     color: #94a3b8;
     border: 1px solid #334155;
-    padding: 8px 16px;
+    padding: 8px 18px;
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
     font-weight: 500;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin: 0 !important; /* Elimina cualquier margen residual que cause traslape */
 }
 
-.btn-category:hover, .btn-category.active {
+.btn-category:hover, 
+.btn-category.active,
+.category-btn:hover,
+.category-btn.active {
     background-color: #38bdf8;
     color: #0f172a;
     border-color: #38bdf8;
