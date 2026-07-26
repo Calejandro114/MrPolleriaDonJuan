@@ -573,3 +573,29 @@ body.swal2-shown {
 .swal2-html-container {
     overscroll-behavior: contain !important;
 }
+
+/* Corrección de colores: Texto real vs Texto Fantasma (Placeholder) */
+
+/* 1. Lo que el usuario escribe (Texto Real) */
+.swal2-input, 
+.swal2-textarea, 
+.swal2-select {
+    color: #ffffff !important; /* Blanco bien nítido */
+    font-weight: 600 !important;
+}
+
+/* 2. El texto fantasma (Placeholder) en todos los navegadores */
+.swal2-input::placeholder,
+.swal2-textarea::placeholder {
+    color: #64748b !important; /* Gris tenue */
+    opacity: 0.5 !important;   /* Transparencia fantasma */
+    font-weight: 400 !important;
+    font-style: italic;
+}
+
+/* Para compatibilidad total con Firefox y Chrome */
+.swal2-input::-webkit-input-placeholder,
+.swal2-textarea::-webkit-input-placeholder {
+    color: #64748b !important;
+    opacity: 0.5 !important;
+}

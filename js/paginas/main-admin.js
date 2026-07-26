@@ -238,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
             snapshot.forEach(doc => {
                 const data = doc.data();
                 
-                // Mapeo del estado de stock usando booleanos de Firestore
                 let estadoStock = 'instock';
                 if (data.disponibleVenta === false) {
                     estadoStock = 'unavailable';
@@ -414,12 +413,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAddProduct.addEventListener("click", () => openProductModal(null));
     }
 
-    // 8. Modal de Edición/Creación con Limpieza y Formateo Automático de Precios ($... MXN)
-    // 8. Modal de Edición/Creación con Bloqueo de Scroll en el Fondo
+    // 8. Modal de Edición/Creación con Autogeneración de Ruta de Imagen desde Archivo Local
     async function openProductModal(product = null) {
         const isEdit = !!product;
 
-        // Función para extraer solo los números (ej. de "$250 MXN" deja "250")
         const extraerNumero = (str) => {
             if (!str) return '';
             return String(str).replace(/[^0-9.]/g, '');
@@ -471,9 +468,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         <label style="font-size:0.8rem; color:#94a3b8;">Descripción</label>
                         <textarea id="swal-prod-desc" class="swal2-textarea" placeholder="Ej. Muñeco / Figura 3D Articulada" style="width:100%; margin:4px 0 0 0; background:#0f172a; color:#f8fafc;">${product ? product.descripcion : ''}</textarea>
                     </div>
-                    <div>
-                        <label style="font-size:0.8rem; color:#94a3b8;">Ruta o URL de Imagen</label>
-                        <input id="swal-prod-img" class="swal2-input" placeholder="Ej. img/productos/3d/vocaloid/miku/img1.png" value="${product ? product.imagen : ''}" style="width:100%; margin:4px 0 0 0;">
+
+                    <!-- SECCIÓN DE IMAGEN CON AUTOGENERACIÓN DE RUTA DESDE ARCHIVO LOCAL -->
+                    <div style="background:#0f172a; border:1px solid #334155; padding:12px; border-radius:10px;">
+                        <label style="font-size:0.8rem; color:#38bdf8; font-weight:700; display:block; margin-bottom:6px;">
+                            <i class="fa-solid fa-image"></i> Seleccionar Imagen desde tu Equipo
+                        </label>
+                        <input type="file" id="swal-prod-file" accept="image/*" style="display:none;">
+                        <button type="button" id="swal-btn-file" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); padding:8px 12px; border-radius:8px; width:100%; cursor:pointer; font-weight:600; font-size:0.85rem;">
+                            <i class="fa-solid fa-folder-open"></i> Elegir foto de muestra
+                        </button>
+
+                        <div style="margin-top:10px;">
+                            <label style="font-size:0.75rem; color:#94a3b8;">Ruta Generada para GitHub / Local:</label>
+                            <input id="swal-prod-img" class="swal2-input" placeholder="Ej. img/productos/3d/miku.png" value="${product ? product.imagen : ''}" style="width:100%; margin:4px 0 0 0; font-size:0.85rem;">
+                        </div>
+
+                        <!-- VISTA PREVIA OBLIGATORIA -->
+                        <div id="swal-preview-wrapper" style="margin-top:10px; display:${product && product.imagen ? 'block' : 'none'}; text-align:center;">
+                            <span style="font-size:0.75rem; color:#94a3b8; display:block; margin-bottom:4px;">Vista Previa de Imagen:</span>
+                            <img id="swal-img-preview" src="${product && product.imagen ? (product.imagen.startsWith('http') || product.imagen.startsWith('../') ? product.imagen : '../' + product.imagen) : ''}" style="max-height:100px; border-radius:8px; border:1px solid #334155; object-fit:cover;">
+                        </div>
                     </div>
                 </div>
             `,
@@ -483,9 +498,56 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmButtonColor: '#38bdf8',
             cancelButtonColor: '#334155',
 
-            // 👈 AQUÍ BLOQUEAMOS Y DESBLOQUEAMOS EL SCROLL DEL FONDO
             willOpen: () => {
                 document.body.style.overflow = 'hidden';
+            },
+            didOpen: () => {
+                const fileInput = document.getElementById('swal-prod-file');
+                const btnFile = document.getElementById('swal-btn-file');
+                const imgInput = document.getElementById('swal-prod-img');
+                const catSelect = document.getElementById('swal-prod-cat');
+                const previewWrapper = document.getElementById('swal-preview-wrapper');
+                const imgPreview = document.getElementById('swal-img-preview');
+
+                if (btnFile && fileInput) {
+                    btnFile.addEventListener('click', () => fileInput.click());
+                }
+
+                if (fileInput) {
+                    fileInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const catValue = catSelect ? catSelect.value : '3d';
+                            const cleanName = file.name.toLowerCase().replace(/\s+/g, '_');
+                            
+                            // Construye la ruta exacta para GitHub/Local
+                            const rutaGenerada = `img/productos/${catValue}/${cleanName}`;
+                            imgInput.value = rutaGenerada;
+
+                            // Muestra la vista previa local inmediata
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                                imgPreview.src = evt.target.result;
+                                previewWrapper.style.display = 'block';
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                if (imgInput) {
+                    imgInput.addEventListener('input', () => {
+                        const val = imgInput.value.trim();
+                        if (val) {
+                            let src = val;
+                            if (!src.startsWith('http') && !src.startsWith('../')) src = '../' + src;
+                            imgPreview.src = src;
+                            previewWrapper.style.display = 'block';
+                        } else {
+                            previewWrapper.style.display = 'none';
+                        }
+                    });
+                }
             },
             didClose: () => {
                 document.body.style.overflow = 'auto';
@@ -507,7 +569,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return false;
                 }
 
-                // Formatear automáticamente como "$... MXN"
                 const precioSinDescuento = `$${rawPrecioSin} MXN`;
                 const precioConDescuento = rawPrecioCon ? `$${rawPrecioCon} MXN` : '';
 
