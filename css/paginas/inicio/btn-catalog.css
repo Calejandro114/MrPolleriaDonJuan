@@ -1,0 +1,67 @@
+/* css/paginas/inicio/btn-catalog.css */
+
+/* Contenedor para centrar el botón con buen margen */
+.catalog-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+/* Botón con estilo Púrpura / Lila Neón */
+.btn-catalog-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: rgba(15, 23, 42, 0.8); /* Fondo oscuro translúcido */
+    color: #e9d5ff; /* Lila claro para el texto */
+    border: 2px solid #a855f7; /* Borde púrpura brillante */
+    border-radius: 50px; /* Estilo cápsula */
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Efecto de luz neón base */
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.3),
+                inset 0 0 8px rgba(168, 85, 247, 0.2);
+}
+
+/* Icono de la flecha */
+.btn-catalog-cta i {
+    font-size: 0.95rem;
+    transition: transform 0.3s ease;
+    color: #c084fc;
+}
+
+/* Efecto Hover: Al pasar el mouse se intensifica la luz neón */
+.btn-catalog-cta:hover {
+    color: #ffffff;
+    border-color: #c084fc;
+    background-color: rgba(168, 85, 247, 0.15);
+    transform: translateY(-2px);
+    
+    /* Resplandor neón intenso */
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6),
+                0 0 35px rgba(168, 85, 247, 0.3),
+                inset 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Animación de la flecha al pasar el mouse */
+.btn-catalog-cta:hover i {
+    transform: translateX(6px);
+    color: #ffffff;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 768px) {
+    .btn-catalog-cta {
+        width: 100%; /* Ocupa el ancho completo en pantallas chicas */
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}

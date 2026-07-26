@@ -1,0 +1,42 @@
+/* css/paginas/inicio/destacados.css */
+
+/* Tarjeta contenedora exclusiva para Destacados y Novedades */
+.destacados-card {
+    background: rgba(15, 23, 42, 0.65); /* Fondo oscuro translúcido */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12); /* Borde translúcido brillante */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 32px 28px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Ajustes de los títulos dentro del recuadro */
+.destacados-card .section-header {
+    margin-bottom: 24px;
+}
+
+.destacados-card .section-header h2 {
+    color: #f8fafc;
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.destacados-card .section-header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* Adaptación responsive para celulares */
+@media (max-width: 768px) {
+    .destacados-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+}
