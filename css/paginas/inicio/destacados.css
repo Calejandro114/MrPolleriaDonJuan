@@ -70,3 +70,33 @@
     border-radius: 8px !important;
   }
 }
+
+/* Ajuste forzado de 2 columnas para móvil */
+@media (max-width: 768px) {
+  
+  /* Aplicamos a todas las posibles variantes de contenedores en inicio */
+  .destacados-grid,
+  .novedades-grid,
+  .productos-grid,
+  #destacados-container,
+  #novedades-container,
+  #grid-destacados,
+  #grid-novedades {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columnas exactas */
+    gap: 10px !important;
+    padding: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Aseguramos que la tarjeta no fuerce un ancho de 100% monocolumna */
+  .destacados-grid > div,
+  .novedades-grid > div,
+  .productos-grid > div,
+  .producto-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
