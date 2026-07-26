@@ -1,5 +1,5 @@
-/* js/paginas/resenas/admin-resenas.js */
-import { db } from '../../config/firebase-config.js';
+/* js/paginas/main-admin.js */
+import { db } from '../config/firebase-config.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const authOverlay = document.getElementById("auth-overlay");
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let allProductsList = [];
 
-    // Helper Toast
+    // Helper Toast SweetAlert2
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -35,14 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 1. Manejo de Pestañas (Tabs)
+    // 1. Manejo de Pestañas
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
 
     tabButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             const targetTab = btn.getAttribute("data-tab");
-
             tabButtons.forEach(b => b.classList.remove("active"));
             tabContents.forEach(c => c.classList.remove("active"));
 
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 2. Escuchador de Autenticación de Firebase
+    // 2. Autenticación Firebase
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             if (authOverlay) authOverlay.style.display = "none";
@@ -66,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 3. Inicio de Sesión
+    // 3. Login
     if (formLoginAdmin) {
         formLoginAdmin.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -94,14 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Cerrar Sesión
+    // 4. Logout
     if (btnLogoutAdmin) {
         btnLogoutAdmin.addEventListener("click", () => {
             firebase.auth().signOut().then(() => location.reload());
         });
     }
 
-    // 5. Escuchador en Tiempo Real de Reseñas
+    // 5. Escuchador de Reseñas
     function listenToReviews() {
         if (!db) return;
         const pendingCountElem = document.getElementById("stat-pending-count");
@@ -227,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. Escuchador en Tiempo Real de Productos
+    // 6. Escuchador de Productos con Nombres de Campos Exactos
     function listenToProducts() {
         if (!db || !productsGrid) return;
 
@@ -238,22 +237,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
             snapshot.forEach(doc => {
                 const data = doc.data();
+                
+                // Mapeo del estado de stock usando booleanos de Firestore
+                let estadoStock = 'instock';
+                if (data.disponibleVenta === false) {
+                    estadoStock = 'unavailable';
+                } else if (data.agotado === true) {
+                    estadoStock = 'outstock';
+                } else if (data.sobrePedido === true) {
+                    estadoStock = 'onorder';
+                } else {
+                    estadoStock = 'instock';
+                }
+
                 const item = {
                     docId: doc.id,
-                    customId: data.id || data.codigo || doc.id,
-                    nombre: data.nombre || data.titulo || "Producto",
-                    precio: data.precio || 0,
-                    imagen: data.imagen || data.img || data.fotoUrl || 'https://placehold.co/70x70?text=P',
-                    stock: data.stock || 'instock'
+                    id: data.id || doc.id,
+                    nombre: data.nombre || "Producto",
+                    precioSinDescuento: data.precioSinDescuento || "$0 MXN",
+                    precioConDescuento: data.precioConDescuento || "",
+                    enOferta: data.enOferta === true,
+                    categoria: data.categoria || "3d",
+                    descripcion: data.descripcion || "",
+                    imagen: data.imagen || 'https://placehold.co/70x70?text=P',
+                    stock: data.stock !== undefined ? data.stock : 0,
+                    agotado: data.agotado === true,
+                    sobrePedido: data.sobrePedido === true,
+                    disponibleVenta: data.disponibleVenta !== false,
+                    estadoStock: estadoStock
                 };
 
-                if (item.stock === 'instock') instockCount++;
-                if (item.stock === 'outstock') outstockCount++;
+                if (estadoStock === 'instock') instockCount++;
+                if (estadoStock === 'outstock' || estadoStock === 'unavailable') outstockCount++;
 
                 allProductsList.push(item);
             });
 
-            // Actualizar Métricas
             const totalElem = document.getElementById("stat-products-total");
             const inElem = document.getElementById("stat-products-instock");
             const outElem = document.getElementById("stat-products-outstock");
@@ -285,23 +304,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 rutaImg = '../' + rutaImg;
             }
 
+            const badgeOferta = item.enOferta ? `<span style="font-size:0.7rem; background:#f59e0b; color:#0f172a; padding:1px 6px; border-radius:4px; font-weight:700;">¡Oferta!</span>` : '';
+            const precioMostrar = item.enOferta && item.precioConDescuento ? `${item.precioConDescuento} <s style="font-size:0.8rem; color:#94a3b8;">${item.precioSinDescuento}</s>` : item.precioSinDescuento;
+
             const card = document.createElement("div");
             card.className = "admin-product-card";
             card.innerHTML = `
                 <div class="product-card-top">
                     <img src="${rutaImg}" class="product-thumb" onerror="this.src='https://placehold.co/70x70?text=P';">
                     <div class="product-info">
-                        <h4>${item.nombre}</h4>
-                        <span class="product-id-badge">[${item.customId}]</span>
-                        <div class="product-price">$${parseFloat(item.precio).toFixed(2)} MXN</div>
+                        <h4>${item.nombre} ${badgeOferta}</h4>
+                        <span class="product-id-badge">[${item.id}]</span>
+                        <div class="product-price">${precioMostrar}</div>
                     </div>
                 </div>
                 <div>
                     <label style="font-size: 0.75rem; color: #94a3b8; display: block; margin-bottom: 4px;">Estado de Stock:</label>
-                    <select class="stock-selector ${item.stock}" data-id="${item.docId}">
-                        <option value="instock" ${item.stock === 'instock' ? 'selected' : ''}>🟢 En Stock (Disponible)</option>
-                        <option value="onorder" ${item.stock === 'onorder' ? 'selected' : ''}>🟡 Sobre Pedido</option>
-                        <option value="outstock" ${item.stock === 'outstock' ? 'selected' : ''}>🔴 Agotado</option>
+                    <select class="stock-selector ${item.estadoStock}" data-id="${item.docId}">
+                        <option value="instock" ${item.estadoStock === 'instock' ? 'selected' : ''}>🟢 En Stock (Disponible)</option>
+                        <option value="onorder" ${item.estadoStock === 'onorder' ? 'selected' : ''}>🟡 Sobre Pedido</option>
+                        <option value="outstock" ${item.estadoStock === 'outstock' ? 'selected' : ''}>🔴 Agotado</option>
+                        <option value="unavailable" ${item.estadoStock === 'unavailable' ? 'selected' : ''}>⚪ No disponible para venta actualmente</option>
                     </select>
                 </div>
                 <div class="admin-actions" style="margin-top: 8px; padding-top: 10px;">
@@ -315,29 +338,41 @@ document.addEventListener("DOMContentLoaded", () => {
         attachProductEvents();
     }
 
-    // Buscador de productos
     if (searchProductsInput) {
         searchProductsInput.addEventListener("input", () => {
             const query = searchProductsInput.value.toLowerCase().trim();
             const filtered = allProductsList.filter(p => 
-                p.customId.toLowerCase().includes(query) || 
-                p.nombre.toLowerCase().includes(query)
+                p.id.toLowerCase().includes(query) || 
+                p.nombre.toLowerCase().includes(query) ||
+                p.categoria.toLowerCase().includes(query)
             );
             renderProductsGrid(filtered);
         });
     }
 
-    // Eventos de los productos
+    // 7. Sincronización del Selector de Stock
     function attachProductEvents() {
         document.querySelectorAll(".stock-selector").forEach(select => {
             select.addEventListener("change", async () => {
                 const docId = select.getAttribute("data-id");
-                const newStock = select.value;
+                const selectedVal = select.value;
+
+                let payload = {};
+                if (selectedVal === 'instock') {
+                    payload = { agotado: false, sobrePedido: false, disponibleVenta: true };
+                } else if (selectedVal === 'onorder') {
+                    payload = { agotado: false, sobrePedido: true, disponibleVenta: true, stock: 0 };
+                } else if (selectedVal === 'outstock') {
+                    payload = { agotado: true, sobrePedido: false, disponibleVenta: true, stock: 0 };
+                } else if (selectedVal === 'unavailable') {
+                    payload = { agotado: true, sobrePedido: false, disponibleVenta: false, stock: 0 };
+                }
+
                 try {
-                    await db.collection("productos").doc(docId).update({ stock: newStock });
-                    Toast.fire({ icon: 'success', title: 'Stock actualizado' });
+                    await db.collection("productos").doc(docId).update(payload);
+                    Toast.fire({ icon: 'success', title: 'Estado actualizado' });
                 } catch (e) {
-                    Toast.fire({ icon: 'error', title: 'Error al cambiar stock' });
+                    Toast.fire({ icon: 'error', title: 'Error al cambiar estado' });
                 }
             });
         });
@@ -347,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const docId = btn.getAttribute("data-id");
                 const res = await Swal.fire({
                     title: '¿Eliminar producto?',
-                    text: 'Saldrá del catálogo inmediatamente.',
+                    text: 'Saldrá de Firestore inmediatamente.',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#ef4444',
@@ -375,34 +410,70 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Botón Agregar Producto
     if (btnAddProduct) {
         btnAddProduct.addEventListener("click", () => openProductModal(null));
     }
 
-    // Modal Crear / Editar Producto
+    // 8. Modal de Edición/Creación con Limpieza y Formateo Automático de Precios ($... MXN)
+    // 8. Modal de Edición/Creación con Bloqueo de Scroll en el Fondo
     async function openProductModal(product = null) {
         const isEdit = !!product;
+
+        // Función para extraer solo los números (ej. de "$250 MXN" deja "250")
+        const extraerNumero = (str) => {
+            if (!str) return '';
+            return String(str).replace(/[^0-9.]/g, '');
+        };
+
+        const numPrecioSin = product ? extraerNumero(product.precioSinDescuento) : '';
+        const numPrecioCon = product ? extraerNumero(product.precioConDescuento) : '';
 
         const { value: formValues } = await Swal.fire({
             title: isEdit ? 'Editar Producto' : 'Nuevo Producto',
             html: `
-                <div style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+                <div style="display:flex; flex-direction:column; gap:12px; text-align:left; max-height:70vh; overflow-y:auto; padding-right:5px;">
                     <div>
                         <label style="font-size:0.8rem; color:#94a3b8;">ID / Código del Producto *</label>
-                        <input id="swal-prod-id" class="swal2-input" placeholder="Ej. 3DP-005" value="${product ? product.customId : ''}" style="width:100%; margin:4px 0 0 0;">
+                        <input id="swal-prod-id" class="swal2-input" placeholder="Ej. 3DP-001" value="${product ? product.id : ''}" style="width:100%; margin:4px 0 0 0;">
                     </div>
                     <div>
                         <label style="font-size:0.8rem; color:#94a3b8;">Nombre del Producto *</label>
-                        <input id="swal-prod-nombre" class="swal2-input" placeholder="Ej. Figura Hatsune Miku" value="${product ? product.nombre : ''}" style="width:100%; margin:4px 0 0 0;">
+                        <input id="swal-prod-nombre" class="swal2-input" placeholder="Ej. Hatsune Miku / Figura 3d Articulada" value="${product ? product.nombre : ''}" style="width:100%; margin:4px 0 0 0;">
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:#94a3b8;">Precio (MXN) *</label>
-                        <input id="swal-prod-precio" type="number" step="0.01" class="swal2-input" placeholder="Ej. 250.00" value="${product ? product.precio : ''}" style="width:100%; margin:4px 0 0 0;">
+                        <label style="font-size:0.8rem; color:#94a3b8;">Categoría *</label>
+                        <select id="swal-prod-cat" class="swal2-input" style="width:100%; margin:4px 0 0 0; background:#0f172a; color:#f8fafc;">
+                            <option value="3d" ${product && product.categoria === '3d' ? 'selected' : ''}>Impresión 3D</option>
+                            <option value="llavero" ${product && product.categoria === 'llavero' ? 'selected' : ''}>Llaveros</option>
+                            <option value="laser" ${product && product.categoria === 'laser' ? 'selected' : ''}>Corte & Grabado Láser</option>
+                            <option value="textil" ${product && product.categoria === 'textil' ? 'selected' : ''}>Gorras & Pulseras</option>
+                            <option value="papeleria" ${product && product.categoria === 'papeleria' ? 'selected' : ''}>Papelería & Stickers</option>
+                            <option value="pines" ${product && product.categoria === 'pines' ? 'selected' : ''}>Pines</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.8rem; color:#94a3b8;">Precio Normal (Escribe solo el número) *</label>
+                        <input id="swal-prod-precio" type="number" step="0.01" class="swal2-input" placeholder="Ej. 250" value="${numPrecioSin}" style="width:100%; margin:4px 0 0 0;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.8rem; color:#94a3b8;">Precio Descuento (Escribe solo el número)</label>
+                        <input id="swal-prod-precio-desc" type="number" step="0.01" class="swal2-input" placeholder="Ej. 150" value="${numPrecioCon}" style="width:100%; margin:4px 0 0 0;">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                        <input type="checkbox" id="swal-prod-oferta" ${product && product.enOferta ? 'checked' : ''} style="width:18px; height:18px; cursor:pointer;">
+                        <label for="swal-prod-oferta" style="font-size:0.85rem; color:#f8fafc; cursor:pointer;">Activar como Producto en Oferta (enOferta)</label>
+                    </div>
+                    <div>
+                        <label style="font-size:0.8rem; color:#94a3b8;">Cantidad de Stock</label>
+                        <input id="swal-prod-stock" type="number" class="swal2-input" placeholder="Ej. 2" value="${product ? product.stock : 0}" style="width:100%; margin:4px 0 0 0;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.8rem; color:#94a3b8;">Descripción</label>
+                        <textarea id="swal-prod-desc" class="swal2-textarea" placeholder="Ej. Muñeco / Figura 3D Articulada" style="width:100%; margin:4px 0 0 0; background:#0f172a; color:#f8fafc;">${product ? product.descripcion : ''}</textarea>
                     </div>
                     <div>
                         <label style="font-size:0.8rem; color:#94a3b8;">Ruta o URL de Imagen</label>
-                        <input id="swal-prod-img" class="swal2-input" placeholder="Ej. img/productos/miku.webp" value="${product ? product.imagen : ''}" style="width:100%; margin:4px 0 0 0;">
+                        <input id="swal-prod-img" class="swal2-input" placeholder="Ej. img/productos/3d/vocaloid/miku/img1.png" value="${product ? product.imagen : ''}" style="width:100%; margin:4px 0 0 0;">
                     </div>
                 </div>
             `,
@@ -411,44 +482,66 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmButtonText: isEdit ? 'Guardar Cambios' : 'Crear Producto',
             confirmButtonColor: '#38bdf8',
             cancelButtonColor: '#334155',
+
+            // 👈 AQUÍ BLOQUEAMOS Y DESBLOQUEAMOS EL SCROLL DEL FONDO
+            willOpen: () => {
+                document.body.style.overflow = 'hidden';
+            },
+            didClose: () => {
+                document.body.style.overflow = 'auto';
+            },
+
             preConfirm: () => {
                 const customId = document.getElementById('swal-prod-id').value.trim();
                 const nombre = document.getElementById('swal-prod-nombre').value.trim();
-                const precio = parseFloat(document.getElementById('swal-prod-precio').value) || 0;
+                const categoria = document.getElementById('swal-prod-cat').value;
+                const rawPrecioSin = document.getElementById('swal-prod-precio').value.trim();
+                const rawPrecioCon = document.getElementById('swal-prod-precio-desc').value.trim();
+                const enOferta = document.getElementById('swal-prod-oferta').checked;
+                const stockVal = Number(document.getElementById('swal-prod-stock').value) || 0;
+                const descripcion = document.getElementById('swal-prod-desc').value.trim();
                 const imagen = document.getElementById('swal-prod-img').value.trim();
 
-                if (!customId || !nombre) {
-                    Swal.showValidationMessage('Por favor completa el ID y Nombre.');
+                if (!customId || !nombre || !rawPrecioSin) {
+                    Swal.showValidationMessage('Por favor completa ID, Nombre y Precio Normal.');
                     return false;
                 }
 
-                return { customId, nombre, precio, imagen };
+                // Formatear automáticamente como "$... MXN"
+                const precioSinDescuento = `$${rawPrecioSin} MXN`;
+                const precioConDescuento = rawPrecioCon ? `$${rawPrecioCon} MXN` : '';
+
+                return {
+                    id: customId,
+                    nombre,
+                    categoria,
+                    precioSinDescuento,
+                    precioConDescuento,
+                    enOferta,
+                    stock: stockVal,
+                    descripcion,
+                    imagen
+                };
             }
         });
 
         if (formValues) {
             try {
                 if (isEdit) {
-                    await db.collection("productos").doc(product.docId).update({
-                        id: formValues.customId,
-                        nombre: formValues.nombre,
-                        precio: formValues.precio,
-                        imagen: formValues.imagen
-                    });
+                    await db.collection("productos").doc(product.docId).update(formValues);
                     Toast.fire({ icon: 'success', title: 'Producto actualizado' });
                 } else {
                     await db.collection("productos").add({
-                        id: formValues.customId,
-                        nombre: formValues.nombre,
-                        precio: formValues.precio,
-                        imagen: formValues.imagen,
-                        stock: 'instock',
-                        fecha: new Date().toISOString()
+                        ...formValues,
+                        agotado: false,
+                        sobrePedido: false,
+                        disponibleVenta: true
                     });
-                    Toast.fire({ icon: 'success', title: 'Producto creado' });
+                    Toast.fire({ icon: 'success', title: 'Producto creado con éxito' });
                 }
             } catch (e) {
-                Toast.fire({ icon: 'error', title: 'Error al guardar producto' });
+                console.error(e);
+                Toast.fire({ icon: 'error', title: 'Error al guardar en Firestore' });
             }
         }
     }

@@ -1,4 +1,4 @@
-/* css/paginas/resenas/admin-resenas.css */
+/* css/paginas/main-admin.css */
 
 /* Pantalla de Bloqueo / Login */
 .auth-overlay {
@@ -329,7 +329,7 @@
     margin-top: 4px;
 }
 
-/* Selector de Stock Rápido */
+/* Selector de Stock con 4 Estados */
 .stock-selector {
     padding: 8px 12px;
     border-radius: 8px;
@@ -348,19 +348,25 @@
     border-color: rgba(16, 185, 129, 0.4);
 }
 
-.stock-selector.outstock {
-    background: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
-    border-color: rgba(239, 68, 68, 0.4);
-}
-
 .stock-selector.onorder {
     background: rgba(251, 191, 36, 0.15);
     color: #fbbf24;
     border-color: rgba(251, 191, 36, 0.4);
 }
 
-/* Barra superior de productos */
+.stock-selector.outstock {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.stock-selector.unavailable {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border-color: rgba(148, 163, 184, 0.4);
+}
+
+/* Barra superior */
 .products-top-bar {
     display: flex;
     justify-content: space-between;
@@ -456,7 +462,7 @@
     100% { background-position: -200% 0; }
 }
 
-/* Estilos Formulario Login */
+/* Formulario Login */
 .auth-form .form-input {
     width: 100%;
     padding: 12px 16px;
@@ -529,7 +535,7 @@
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
 }
 
-/* Personalización SweetAlert2 */
+/* SweetAlert2 Tema Oscuro */
 .swal2-popup {
     background: #1e293b !important;
     color: #f8fafc !important;
@@ -543,4 +549,27 @@
 
 .swal2-html-container {
     color: #94a3b8 !important;
+}
+
+b/* Bloquea el scroll del fondo mientras está abierto el modal de editar/crear producto */
+body.swal2-shown {
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+
+/* Congela por completo la página web de fondo al abrir cualquier modal */
+html.swal2-shown, 
+body.swal2-shown {
+    overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none;
+}
+
+/* Aísla la rueda del ratón dentro del modal para que no traspase el scroll al fondo */
+.swal2-popup {
+    overscroll-behavior: contain !important;
+}
+
+.swal2-html-container {
+    overscroll-behavior: contain !important;
 }

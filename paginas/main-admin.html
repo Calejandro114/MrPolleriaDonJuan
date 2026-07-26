@@ -7,16 +7,16 @@
   <link rel="icon" type="image/webp" href="../img/logo.webp">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- SweetAlert2 para Notificaciones Toast Elegantes -->
+  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Estilos Base y Exclusivos de Admin -->
+  <!-- Estilos Base y Exclusivo Admin -->
   <link rel="stylesheet" href="../css/globales/base.css">
   <link rel="stylesheet" href="../css/globales/layout.css">
   <link rel="stylesheet" href="../css/componentes/buttons.css">
   <link rel="stylesheet" href="../css/componentes/forms.css">
   <link rel="stylesheet" href="../css/paginas/resenas/resenas-card.css">
-  <link rel="stylesheet" href="../css/paginas/resenas/admin-resenas.css">
+  <link rel="stylesheet" href="../css/paginas/main-admin.css">
 </head>
 <body style="background-color: #0f172a;">
 
@@ -40,7 +40,6 @@
 
         <p id="auth-error" class="auth-error" style="display: none;"></p>
 
-        <!-- BOTÓN DE REGRESO AL SITIO PÚBLICO -->
         <div class="auth-back-container">
           <a href="../index.html" class="btn-back-public">
             <i class="fa-solid fa-arrow-left"></i> Regresar a la página principal
@@ -60,7 +59,6 @@
           </div>
         </div>
 
-        <!-- Botones del Header -->
         <div class="admin-header-actions">
           <a href="../index.html" class="btn-go-public" title="Ir a la página principal">
             <i class="fa-solid fa-house"></i> Ver Inicio Público
@@ -71,7 +69,7 @@
         </div>
       </div>
 
-      <!-- BARRA DE PESTAÑAS (TABS DE NAVEGACIÓN) -->
+      <!-- BARRA DE PESTAÑAS (TABS) -->
       <div class="admin-tabs">
         <button class="tab-btn active" data-tab="tab-resenas">
           <i class="fa-solid fa-comments"></i> Moderación de Reseñas
@@ -81,9 +79,8 @@
         </button>
       </div>
 
-      <!-- PESTAÑA 1: MODERACIÓN DE RESEÑAS -->
+      <!-- PESTAÑA 1: RESEÑAS -->
       <div id="tab-resenas" class="tab-content active">
-        <!-- TARJETAS DE MÉTRICAS RESEÑAS -->
         <div class="admin-stats-bar">
           <div class="stat-card">
             <i class="fa-solid fa-clock-rotate-left stat-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);"></i>
@@ -101,7 +98,6 @@
           </div>
         </div>
 
-        <!-- SECCIÓN DE PENDIENTES -->
         <section style="margin-bottom: 50px;">
           <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color:#fbbf24;"></i> Pendientes de Aprobación</h3>
           <div id="pending-grid" class="admin-resenas-grid">
@@ -110,7 +106,6 @@
           </div>
         </section>
 
-        <!-- SECCIÓN DE APROBADAS -->
         <section>
           <h3 class="section-title"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Reseñas Ya Publicadas</h3>
           <div id="approved-grid" class="admin-resenas-grid">
@@ -120,20 +115,18 @@
         </section>
       </div>
 
-      <!-- PESTAÑA 2: GESTIÓN DE PRODUCTOS Y STOCK -->
+      <!-- PESTAÑA 2: PRODUCTOS Y STOCK -->
       <div id="tab-productos" class="tab-content">
-        <!-- ACCIONES SUPERIORES Y BUSCADOR -->
         <div class="products-top-bar">
           <div class="products-search-box">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="search-admin-products" class="form-input" placeholder="Buscar producto por ID o nombre...">
+            <input type="text" id="search-admin-products" class="form-input" placeholder="Buscar producto por ID, nombre o categoría...">
           </div>
           <button id="btn-add-product" class="btn-add-product">
             <i class="fa-solid fa-plus"></i> Nuevo Producto
           </button>
         </div>
 
-        <!-- MÉTRICAS DE PRODUCTOS -->
         <div class="admin-stats-bar">
           <div class="stat-card">
             <i class="fa-solid fa-box stat-icon" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1);"></i>
@@ -153,12 +146,11 @@
             <i class="fa-solid fa-ban stat-icon" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);"></i>
             <div>
               <div id="stat-products-outstock" class="stat-number">0</div>
-              <div class="stat-label">Agotados</div>
+              <div class="stat-label">Agotados / No disponibles</div>
             </div>
           </div>
         </div>
 
-        <!-- GRILLA DE PRODUCTOS -->
         <section>
           <h3 class="section-title"><i class="fa-solid fa-cubes" style="color:#38bdf8;"></i> Productos Registrados</h3>
           <div id="products-grid" class="admin-products-grid">
@@ -177,7 +169,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-  <!-- Script Admin -->
-  <script type="module" src="../js/paginas/resenas/admin-resenas.js"></script>
+  <!-- Script Admin en su nueva ubicación -->
+  <script type="module" src="../js/paginas/main-admin.js"></script>
 </body>
 </html>
