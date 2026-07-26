@@ -40,3 +40,33 @@
         margin-bottom: 25px;
     }
 }
+
+/* Ajuste para mostrar 2 productos por fila en celular (Inicio) */
+@media (max-width: 768px) {
+  /* Forzamos el contenedor a ser un grid de 2 columnas */
+  .destacados-grid,
+  .novedades-grid,
+  #destacados-container,
+  #novedades-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 10px !important;
+  }
+
+  /* Ajustamos las tarjetas para que no se vean apretadas */
+  .destacados-grid .producto-card,
+  .novedades-grid .producto-card,
+  .producto-card {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+
+  /* Control de la altura de la imagen del producto */
+  .producto-card img {
+    height: 140px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+}

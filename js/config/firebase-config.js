@@ -1,5 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// js/config/firebase-config.js
 
 // Configuración de tu proyecto
 const firebaseConfig = {
@@ -12,6 +11,10 @@ const firebaseConfig = {
   measurementId: "G-MZCL3J1X6W"
 };
 
-// Inicializamos
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+// 1. Inicializamos la app global de Firebase si aún no existe
+if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+// 2. Exportamos 'db' compatible con .collection() para todo el admin
+export const db = firebase.firestore();

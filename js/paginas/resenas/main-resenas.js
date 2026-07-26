@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let base64ImageCompressed = "";
     let listaProductos = [];
 
-    // Mapeo entre la categoría del producto en Firestore y las opciones del selector de Servicio
     const CATEGORIA_A_SERVICIO = {
         '3d': 'Impresión 3D',
         'llavero': 'Llaveros',
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         'textil': 'Gorras & Pulseras / Textil'
     };
 
-    // 1. Manejo del Checkbox Anónimo
+    // 1. Checkbox Anónimo
     if (chkAnonimo && nombreInput) {
         chkAnonimo.addEventListener("change", () => {
             if (chkAnonimo.checked) {
@@ -52,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Cargar productos desde Firestore (guardando también la categoría)
+    // 2. Cargar productos para buscador
     if (typeof db !== 'undefined' && db) {
         db.collection("productos").get().then((snapshot) => {
             snapshot.forEach(doc => {
@@ -71,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     imagen: rutaImg || 'https://placehold.co/40x40?text=P'
                 });
             });
-        }).catch(err => console.error("Error al cargar productos para el buscador:", err));
+        }).catch(err => console.error("Error al cargar productos para buscador:", err));
     }
 
-    // 3. Buscador Autocompletar con Autoselección de Servicio
+    // 3. Autocompletar producto
     if (buscarInput && autocompleteList) {
         buscarInput.addEventListener("input", () => {
             const query = buscarInput.value.toLowerCase().trim();
@@ -107,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (productoIdInput) productoIdInput.value = p.customId;
                         if (productoNombreInput) productoNombreInput.value = p.nombre;
                         
-                        // AUTOSELECCIÓN AUTOMÁTICA DEL SERVICIO
                         if (p.categoria && CATEGORIA_A_SERVICIO[p.categoria]) {
                             if (servicioSelect) {
                                 servicioSelect.value = CATEGORIA_A_SERVICIO[p.categoria];
@@ -129,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Procesar y Comprimir Foto
+    // 4. Foto y Compresión
     if (fotoInput) {
         fotoInput.addEventListener("change", (e) => {
             const file = e.target.files[0];
@@ -183,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 5. Selector de Estrellas
+    // 5. Estrellas Picker
     if (ratingPicker) {
         const stars = ratingPicker.querySelectorAll("i");
         stars.forEach(star => {
@@ -199,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. Enviar Reseña a Firebase con SweetAlert2
+    // 6. Enviar Reseña a Firebase + Notificación a Telegram
     if (formResena) {
         formResena.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -239,6 +237,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     aprobado: false,
                     fecha: new Date().toISOString()
                 });
+
+                // ENVIAR NOTIFICACIÓN A TU TELEGRAM
+                await enviarNotificacionTelegram(nombre, estrellas, comentario);
 
                 Swal.fire({
                     icon: 'success',
@@ -287,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 7. Leer solo reseñas APROBADAS (aprobado == true)
+    // 7. Leer solo reseñas APROBADAS
     if (typeof db !== 'undefined' && db && resenasGrid) {
         db.collection("resenas")
           .where("aprobado", "==", true)
@@ -304,13 +305,11 @@ document.addEventListener("DOMContentLoaded", () => {
                   const fechaObj = new Date(data.fecha);
                   const fechaFormateada = fechaObj.toLocaleDateString("es-MX", { year: 'numeric', month: 'short', day: 'numeric' });
 
-                  // Estrellas HTML
                   let estrellasHTML = "";
                   for (let i = 1; i <= 5; i++) {
                       estrellasHTML += `<i class="${i <= data.estrellas ? 'fa-solid' : 'fa-regular'} fa-star"></i>`;
                   }
 
-                  // Tag Morado CLICKEABLE
                   const productoLink = data.productoId ? `productos.html?id=${encodeURIComponent(data.productoId)}` : 'productos.html';
                   const productoTag = data.productoNombre ? `
                       <a href="${productoLink}" class="resena-product-tag" title="Ver ${data.productoNombre}">
@@ -318,10 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
                       </a>
                   ` : '';
 
-                  // Foto sólo si existe
                   const fotoHTML = data.fotoUrl ? `<div class="resena-img-container"><img src="${data.fotoUrl}" alt="Foto del trabajo"></div>` : '';
 
-                  // Rating continuo + Nota numérica (ej. 4/5)
                   const ratingHTML = `
                       <div class="resena-rating-box">
                           <span class="resena-stars-icons">${estrellasHTML}</span>
@@ -353,3 +350,33 @@ document.addEventListener("DOMContentLoaded", () => {
           });
     }
 });
+
+// Función para Telegram
+async function enviarNotificacionTelegram(nombreCliente, calificacion, comentario) {
+  const TELEGRAM_TOKEN = "8896584627:AAFg6QC7rWnVWJWUUQKGWzP4uZTNkBOSbFM";
+  const TELEGRAM_CHAT_ID = "6763266520";
+
+  const mensaje = 
+`🔔 *¡Nueva Reseña Pendiente por Aprobar!*
+
+👤 *Cliente:* ${nombreCliente}
+⭐ *Calificación:* ${calificacion} de 5 estrellas
+💬 *Comentario:*
+"${comentario}"
+
+📲 [Abrir Panel de Administración](https://calejandro114.github.io/MrPolleriaDonJuan/paginas/main-admin.html)`;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: mensaje,
+        parse_mode: "Markdown"
+      })
+    });
+  } catch (error) {
+    console.error("Error al enviar notificación a Telegram:", error);
+  }
+}
