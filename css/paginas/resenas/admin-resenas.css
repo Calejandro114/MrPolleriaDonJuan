@@ -1,66 +1,345 @@
 /* css/paginas/resenas/admin-resenas.css */
 
-.admin-container {
-    max-width: 900px;
-    margin: 40px auto;
+/* Pantalla de Bloqueo / Login */
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(16px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
 }
 
-.admin-header-card {
+.auth-card {
+    background: #1e293b;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 20px;
+    padding: 35px 30px;
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.auth-icon {
+    font-size: 2.5rem;
+    color: #38bdf8;
+    margin-bottom: 15px;
+}
+
+.auth-card h2 {
+    color: #f8fafc;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+
+.auth-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 12px;
+}
+
+/* Header del Admin */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.admin-header h1 {
+    color: #f8fafc;
+    font-size: 1.6rem;
+}
+
+.admin-subtitle {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-go-public {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-go-public:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.btn-logout {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+/* Banner de Métricas Rápidas */
+.admin-stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    font-size: 1.6rem;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.section-title {
+    color: #f8fafc;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Grilla del Admin */
+.admin-resenas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.admin-card {
     background: #1e293b;
     border: 1px solid #334155;
     border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 30px;
+    padding: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.admin-item {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    text-align: left;
+.admin-card.pending {
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.admin-card.approved {
+    border-color: rgba(56, 189, 248, 0.3);
 }
 
 .admin-actions {
     display: flex;
     gap: 10px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #334155;
 }
 
 .btn-approve {
-    background-color: #22c55e;
-    color: #ffffff;
+    flex: 1;
+    background: #10b981;
+    color: #0f172a;
     border: none;
-    padding: 10px 16px;
+    padding: 10px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background 0.2s;
 }
 
 .btn-approve:hover {
-    background-color: #16a34a;
+    background: #34d399;
 }
 
 .btn-delete {
-    background-color: #ef4444;
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    padding: 10px 14px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .btn-delete:hover {
-    background-color: #dc2626;
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* Tarjeta de Estado Vacío (Empty State Card) */
+.empty-state-card {
+    background: rgba(30, 41, 59, 0.4);
+    border: 2px dashed #334155;
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    grid-column: 1 / -1;
+}
+
+.empty-state-card i {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.empty-state-card p {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.empty-state-card span {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.loading-text {
+    color: #94a3b8;
+    grid-column: 1 / -1;
+}
+
+/* Estilos para los campos de texto del Login Admin */
+.auth-form .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.auth-form .form-input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* Estilo para el botón de Iniciar Sesión */
+.auth-form .btn-submit-review {
+    width: 100%;
+    padding: 12px;
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.auth-form .btn-submit-review:hover {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* Botón de regreso en la pantalla de Login */
+.auth-back-container {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #334155;
+}
+
+.btn-back-public {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.btn-back-public:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
 }
