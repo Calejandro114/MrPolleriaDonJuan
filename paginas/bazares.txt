@@ -1,0 +1,249 @@
+No borrar es solo por si acaso de como era antes bazares y me gusto
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bazares & Eventos | Mr. Pollería Don Juan</title>
+  <link rel="icon" type="image/webp" href="../img/logo.webp?v=2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Configuración PWA & SEO OpenGraph para WhatsApp -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:title" content="Bazares y Eventos | Mr. Pollería Don Juan">
+  <meta property="og:description" content="Encuentra las fechas, mapas y ubicaciones de los bazares locales donde nos presentamos en Culiacán.">
+  <meta property="og:image" content="../img/logo.webp">
+  <meta property="og:type" content="website">
+
+  <!-- Componentes Base -->
+  <link rel="stylesheet" href="../css/globales/base.css">
+  <link rel="stylesheet" href="../css/globales/layout.css">
+  <link rel="stylesheet" href="../css/componentes/buttons.css">
+  <link rel="stylesheet" href="../css/componentes/nav.css">
+  <link rel="stylesheet" href="../css/componentes/modal.css">
+  <link rel="stylesheet" href="../css/componentes/footer.css">
+
+  <!-- Header / Hero Banner -->
+  <link rel="stylesheet" href="../css/paginas/inicio/header.css">
+
+  <!-- Registro del Service Worker para PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(reg => console.log('PWA Service Worker registrado', reg))
+          .catch(err => console.error('Error registrando Service Worker', err));
+      });
+    }
+  </script>
+
+  <style>
+    /* Estilos propios para la sección de Bazares */
+    .bazar-card-hero {
+      background: #1e293b;
+      border: 1px solid #38bdf8;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
+    }
+
+    .bazar-badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .bazar-grid-actual {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .bazar-past-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .bazar-card-past {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .bazar-card-past:hover {
+      transform: translateY(-4px);
+      border-color: #38bdf8;
+    }
+
+    .bazar-past-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #334155;
+    }
+
+    .bazar-past-content {
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO HEADER -->
+  <header class="hero-header" id="inicio">
+    <div class="hero-card">
+      <img src="../img/logo.webp" alt="Logo" class="logo-hero" onerror="this.onerror=null; this.src='https://placehold.co/110x110?text=Don+Juan';">
+      <div class="hero-text">
+        <h1>Mr. Pollería Don Juan</h1>
+        <p class="tagline">Impresión 3D, Corte Láser y Regalos Personalizados</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav class="sticky-navbar">
+    <div class="nav-brand">
+      <img src="../img/logo.webp" alt="Logo" class="logo-mini" onerror="this.onerror=null; this.src='https://placehold.co/32x32?text=DJ';">
+      <span class="brand-title">Mr.Pollería Don Juan</span>
+    </div>
+    <div id="nav-wrapper"></div>
+  </nav>
+
+  <!-- CONTENIDO DE BAZARES -->
+  <div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+    
+    <!-- 1. BAZAR ACTUAL / PRÓXIMO EVENTO -->
+    <div style="text-align: left;">
+      <h2 style="color: #f8fafc;">📍 Bazar Actual / Próximo Evento</h2>
+      <p style="color: #cbd5e1;">¡Acompáñanos en nuestro próximo punto de venta físico en Culiacán! Tendremos stock inmediato, muestras de grabado láser y figuras 3D.</p>
+    </div>
+
+    <div class="bazar-card-hero">
+      <div class="bazar-badge-status">
+        <i class="fa-solid fa-circle-dot fa-beat-fade"></i> Evento Programado
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h3 style="color: #f8fafc; font-size: 1.5rem; margin-bottom: 6px;">[Nombre del Bazar Actual]</h3>
+          <p style="color: #38bdf8; font-weight: 600; margin-bottom: 4px;">
+            <i class="fa-regular fa-calendar-days"></i> Sábado 15 y Domingo 16 de Agosto, 2026
+          </p>
+          <p style="color: #94a3b8; font-size: 0.9rem;">
+            <i class="fa-regular fa-clock"></i> Horario: 4:00 PM - 9:00 PM &nbsp;|&nbsp; <i class="fa-solid fa-store"></i> Mesa / Stand #12
+          </p>
+        </div>
+
+        <a href="https://wa.me/526673538481?text=Hola,%20quisiera%20saber%20más%20sobre%20su%20stand%20en%20el%20bazar" target="_blank" class="btn-primary" style="padding: 10px 16px; font-size: 0.85rem; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <i class="fa-brands fa-whatsapp"></i> Preguntar por Stand
+        </a>
+      </div>
+
+      <!-- Grid de Mapa y Croquis de Ubicación del Stand -->
+      <div class="bazar-grid-actual">
+        
+        <!-- Croquis / Foto de la Mesa en el evento -->
+        <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 12px; text-align: center;">
+          <h4 style="color: #f8fafc; font-size: 0.95rem; margin-bottom: 8px;">
+            <i class="fa-solid fa-map"></i> Ubicación del Stand / Croquis
+          </h4>
+          <img src="../img/bazares/croquis-actual.webp" alt="Croquis Stand" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; border: 1px solid #334155;" onerror="this.src='https://placehold.co/400x220?text=Foto+Mesa+/+Croquis+Stand';">
+          <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 8px;">
+            Búscanos junto a la entrada principal.
+          </p>
+        </div>
+
+        <!-- Ubicación GPS (Google Maps) -->
+        <div style="background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 12px;">
+          <h4 style="color: #f8fafc; font-size: 0.95rem; margin-bottom: 8px;">
+            <i class="fa-solid fa-location-crosshairs" style="color: #ef4444;"></i> GPS del Evento
+          </h4>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.8247!2d-107.4172!3d24.7920!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86bcd73b7a54823d%3A0xc6c76dbcb15ef271!2sPlaza%20Galerias%20San%20Miguel!5e0!3m2!1ses!2smx!4v1710000000000!5m2!1ses!2smx" 
+            width="100%" 
+            height="220" 
+            style="border:0; border-radius:8px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. HISTORIAL DE BAZARES ANTERIORES -->
+    <div style="text-align: left; margin-top: 50px;">
+      <h3 style="color: #f8fafc; font-size: 1.3rem;">📜 Bazares Anteriores</h3>
+      <p style="color: #cbd5e1; font-size: 0.9rem;">Revive algunos de los eventos locales donde hemos estado presentes exhibiendo nuestro trabajo.</p>
+    </div>
+
+    <div class="bazar-past-grid">
+      
+      <!-- Evento Pasado 1 -->
+      <div class="bazar-card-past">
+        <img src="../img/bazares/pasado-1.webp" alt="Bazar Pasado 1" class="bazar-past-img" onerror="this.src='https://placehold.co/300x180?text=Foto+Bazar+1';">
+        <div class="bazar-past-content">
+          <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">Julio 2026</span>
+          <h4 style="color: #f8fafc; margin: 4px 0 6px 0;">Bazar Emprendedores Culiacán</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.4;">
+            Exhibimos llaveros articulados, figuras impresas en 3D y placas grabadas en láser.
+          </p>
+        </div>
+      </div>
+
+      <!-- Evento Pasado 2 -->
+      <div class="bazar-card-past">
+        <img src="../img/bazares/pasado-2.webp" alt="Bazar Pasado 2" class="bazar-past-img" onerror="this.src='https://placehold.co/300x180?text=Foto+Bazar+2';">
+        <div class="bazar-past-content">
+          <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">Junio 2026</span>
+          <h4 style="color: #f8fafc; margin: 4px 0 6px 0;">Expo Creativa Nocturna</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.4;">
+            Presentación de artículos personalizados en madera MDF y pulseras artesanales.
+          </p>
+        </div>
+      </div>
+
+      <!-- Evento Pasado 3 -->
+      <div class="bazar-card-past">
+        <img src="../img/bazares/pasado-3.webp" alt="Bazar Pasado 3" class="bazar-past-img" onerror="this.src='https://placehold.co/300x180?text=Foto+Bazar+3';">
+        <div class="bazar-past-content">
+          <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">Mayo 2026</span>
+          <h4 style="color: #f8fafc; margin: 4px 0 6px 0;">Bazar Geek & Coleccionables</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.4;">
+            Venta directa de figuras coleccionables impresas en resina y filamento PETG.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER Y MODAL -->
+  <div id="footer-container"></div>
+  <div id="modal-container"></div>
+
+  <script type="module" src="../js/paginas/bazares/main-bazares.js"></script>
+</body>
+</html>

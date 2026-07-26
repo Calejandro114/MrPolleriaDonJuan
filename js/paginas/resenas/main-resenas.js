@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const autocompleteList = document.getElementById("autocomplete-list");
     const productoIdInput = document.getElementById("producto-id");
     const productoNombreInput = document.getElementById("producto-nombre");
+    const servicioSelect = document.getElementById("servicio");
 
     const chkAnonimo = document.getElementById("chk-anonimo");
     const nombreInput = document.getElementById("nombre");
@@ -27,6 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let base64ImageCompressed = "";
     let listaProductos = [];
+
+    // Mapeo entre la categoría del producto en Firestore y las opciones del selector de Servicio
+    const CATEGORIA_A_SERVICIO = {
+        '3d': 'Impresión 3D',
+        'llavero': 'Llaveros',
+        'pines': 'Pines',
+        'laser': 'Corte Láser / Grabado',
+        'papeleria': 'Papelería & Stickers',
+        'textil': 'Gorras & Pulseras / Textil'
+    };
 
     // 1. Manejo del Checkbox Anónimo
     if (chkAnonimo && nombreInput) {
@@ -41,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Cargar productos desde Firestore
+    // 2. Cargar productos desde Firestore (guardando también la categoría)
     if (typeof db !== 'undefined' && db) {
         db.collection("productos").get().then((snapshot) => {
             snapshot.forEach(doc => {
@@ -56,13 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     idDoc: doc.id,
                     customId: data.id || data.codigo || doc.id,
                     nombre: data.nombre || data.titulo || "Producto",
+                    categoria: data.categoria || '3d',
                     imagen: rutaImg || 'https://placehold.co/40x40?text=P'
                 });
             });
         }).catch(err => console.error("Error al cargar productos para el buscador:", err));
     }
 
-    // 3. Buscador Autocompletar
+    // 3. Buscador Autocompletar con Autoselección de Servicio
     if (buscarInput && autocompleteList) {
         buscarInput.addEventListener("input", () => {
             const query = buscarInput.value.toLowerCase().trim();
@@ -94,6 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         buscarInput.value = `[${p.customId}] ${p.nombre}`;
                         if (productoIdInput) productoIdInput.value = p.customId;
                         if (productoNombreInput) productoNombreInput.value = p.nombre;
+                        
+                        // AUTOSELECCIÓN AUTOMÁTICA DEL SERVICIO
+                        if (p.categoria && CATEGORIA_A_SERVICIO[p.categoria]) {
+                            if (servicioSelect) {
+                                servicioSelect.value = CATEGORIA_A_SERVICIO[p.categoria];
+                            }
+                        }
+
                         autocompleteList.style.display = "none";
                     });
                     autocompleteList.appendChild(item);

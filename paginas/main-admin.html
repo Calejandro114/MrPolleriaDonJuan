@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="../css/globales/base.css">
   <link rel="stylesheet" href="../css/globales/layout.css">
   <link rel="stylesheet" href="../css/componentes/buttons.css">
-  <link rel="stylesheet" href="../css/componentes/forms.css">
   <link rel="stylesheet" href="../css/paginas/resenas/resenas-card.css">
   <link rel="stylesheet" href="../css/paginas/main-admin.css">
 </head>
@@ -76,6 +75,9 @@
         </button>
         <button class="tab-btn" data-tab="tab-productos">
           <i class="fa-solid fa-boxes-stacked"></i> Catálogo y Stock
+        </button>
+        <button class="tab-btn" data-tab="tab-bazares">
+          <i class="fa-solid fa-calendar-days"></i> Gestión de Bazares
         </button>
       </div>
 
@@ -154,6 +156,90 @@
         <section>
           <h3 class="section-title"><i class="fa-solid fa-cubes" style="color:#38bdf8;"></i> Productos Registrados</h3>
           <div id="products-grid" class="admin-products-grid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- PESTAÑA 3: GESTIÓN DE BAZARES -->
+      <!-- PESTAÑA 3: GESTIÓN DE BAZARES -->
+      <div id="tab-bazares" class="tab-content">
+        <div class="products-top-bar" style="justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 class="section-title" style="margin: 0;"><i class="fa-solid fa-store" style="color:#38bdf8;"></i> Administrar Bazares y Eventos</h3>
+          <button id="btn-add-bazar" class="btn-add-product">
+            <i class="fa-solid fa-plus"></i> Nuevo Bazar o Evento
+          </button>
+        </div>
+
+        <!-- Formulario Oculto / Contenedor para Registrar o Editar -->
+        <div id="bazar-form-container" class="contacto-card" style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 28px; margin-bottom: 30px; display: none;">
+          <h4 id="bazar-form-title" style="color: #f8fafc; margin-bottom: 20px; font-size: 1.15rem; border-bottom: 1px solid #334155; padding-bottom: 12px;">Registrar Nuevo Bazar</h4>
+          
+          <form id="form-bazar" style="display: flex; flex-direction: column; gap: 20px;">
+            <input type="hidden" id="bazar-id">
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 18px;">
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Nombre del Bazar *</label>
+                <input type="text" id="bazar-nombre" class="form-input" placeholder="Ej. Bazar Emprendedores Culiacán" required style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Tipo de Evento *</label>
+                <select id="bazar-es-actual" class="form-input" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+                  <option value="true">📍 Bazar Actual</option>
+                  <option value="false">📜 Bazar Anterior</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Fecha *</label>
+                <input type="text" id="bazar-fecha" class="form-input" placeholder="Ej. Sábado 15 y Domingo 16" required style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Horario</label>
+                <input type="text" id="bazar-horario" class="form-input" placeholder="Ej. 4:00 PM - 9:00 PM" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Stand / Mesa</label>
+                <input type="text" id="bazar-stand" class="form-input" placeholder="Ej. Stand #12" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Ruta de Imagen (GitHub) *</label>
+                <input type="text" id="bazar-imagen" class="form-input" placeholder="Ej. img/bazares/croquis-actual.webp" required style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+
+              <div>
+                <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">URL Iframe Google Maps (GPS)</label>
+                <input type="text" id="bazar-mapa" class="form-input" placeholder="https://www.google.com/maps/embed?pb=..." style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px;">
+              </div>
+            </div>
+
+            <div>
+              <label style="color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 8px;">Descripción / Resumen</label>
+              <textarea id="bazar-descripcion" rows="4" class="form-input" placeholder="Detalles del evento o resumen de cómo les fue..." style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px; border-top: 1px solid #334155; padding-top: 18px;">
+              <button type="button" id="btn-cancel-bazar" class="btn-logout" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+              <button type="submit" class="btn-submit-review" style="padding: 10px 24px; border-radius: 8px; width: auto; cursor: pointer;">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Bazar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <section>
+          <h3 class="section-title"><i class="fa-solid fa-list" style="color:#38bdf8;"></i> Lista de Bazares Registrados</h3>
+          <div id="admin-bazares-grid" class="admin-products-grid" style="margin-top: 15px;">
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
           </div>
