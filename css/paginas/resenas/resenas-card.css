@@ -11,13 +11,13 @@
     background: rgba(30, 41, 59, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 24px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Mantiene la fecha al fondo sin estirar innecesariamente */
     gap: 16px;
     text-align: left;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .resena-card:hover {
@@ -25,15 +25,22 @@
     border-color: rgba(56, 189, 248, 0.3);
 }
 
+.resena-card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .resena-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 10px;
 }
 
 .resena-author h4 {
     color: #f8fafc;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin: 0;
 }
 
@@ -49,25 +56,73 @@
     margin-top: 4px;
 }
 
-.resena-stars {
+/* Tag morado con enlace interactivo */
+.resena-product-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #c084fc;
+    background: rgba(192, 132, 252, 0.12);
+    border: 1px solid rgba(192, 132, 252, 0.3);
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: all 0.2s ease;
+    word-break: break-word;
+}
+
+.resena-product-tag:hover {
+    background: #c084fc;
+    color: #0f172a;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+
+/* Contenedor de estrellas continuas y nota */
+.resena-rating-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap; /* Evita que las estrellas se dividan en dos renglones */
+    flex-shrink: 0;
+}
+
+.resena-stars-icons {
     color: #fbbf24;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    display: inline-flex;
+    gap: 2px;
+}
+
+.resena-rating-score {
+    color: #f8fafc;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(251, 191, 36, 0.15);
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
 .resena-body {
     color: #cbd5e1;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin: 0;
 }
 
 .resena-footer {
     color: #64748b;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Foto del producto dentro de la reseña */
 .resena-img-container {
-    margin-top: 12px;
+    margin-top: 6px;
     width: 100%;
     max-height: 200px;
     border-radius: 10px;
@@ -79,11 +134,5 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.resena-product-tag {
-    font-size: 0.8rem;
-    color: #c084fc;
-    font-weight: 600;
-    margin-top: 4px;
+    display: block;
 }

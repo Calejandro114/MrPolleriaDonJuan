@@ -41,15 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. Cargar productos desde Firestore incluyendo la imagen del producto
+    // 2. Cargar productos desde Firestore
     if (typeof db !== 'undefined' && db) {
         db.collection("productos").get().then((snapshot) => {
             snapshot.forEach(doc => {
                 const data = doc.data();
-                
                 let rutaImg = data.imagen || data.img || data.fotoUrl || '';
 
-                // Si la ruta no es un link externo (http) y no empieza ya con ../, le agregamos ../ para salir de /paginas/
                 if (rutaImg && !rutaImg.startsWith('http') && !rutaImg.startsWith('../')) {
                     rutaImg = '../' + rutaImg;
                 }
@@ -64,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch(err => console.error("Error al cargar productos para el buscador:", err));
     }
 
-    // 3. Buscador Autocompletar por ID o Nombre con Miniatura Visual
+    // 3. Buscador Autocompletar
     if (buscarInput && autocompleteList) {
         buscarInput.addEventListener("input", () => {
             const query = buscarInput.value.toLowerCase().trim();
@@ -111,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Procesar, Comprimir Foto en Base64 y actualizar etiqueta visual
+    // 4. Procesar y Comprimir Foto
     if (fotoInput) {
         fotoInput.addEventListener("change", (e) => {
             const file = e.target.files[0];
@@ -146,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Compresión JPEG a calidad 0.7
                     base64ImageCompressed = canvas.toDataURL("image/jpeg", 0.7);
                     if (fotoPreview) fotoPreview.src = base64ImageCompressed;
                     if (previewContainer) previewContainer.style.display = "block";
@@ -182,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. Enviar Reseña a Firebase
+    // 6. Enviar Reseña a Firebase con SweetAlert2
     if (formResena) {
         formResena.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -194,7 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const comentario = document.getElementById("comentario").value.trim();
 
             if (!nombre || !comentario) {
-                alert("Por favor completa el nombre y comentario.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor completa el nombre y tu comentario.',
+                    background: '#1e293b',
+                    color: '#f8fafc',
+                    confirmButtonColor: '#38bdf8'
+                });
                 return;
             }
 
@@ -216,9 +220,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     fecha: new Date().toISOString()
                 });
 
-                alert("¡Gracias por tu reseña! Está en revisión por el equipo y se publicará muy pronto.");
-                
-                // Reset completo del formulario
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Gracias por tu reseña!',
+                    text: 'Tu comentario fue enviado con éxito. Se publicará en breve tras una breve verificación.',
+                    background: '#1e293b',
+                    color: '#f8fafc',
+                    confirmButtonColor: '#38bdf8'
+                });
+
                 formResena.reset();
                 if (chkAnonimo) chkAnonimo.checked = false;
                 if (nombreInput) nombreInput.disabled = false;
@@ -232,17 +242,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     ratingPicker.querySelectorAll("i").forEach(s => s.classList.add("active"));
                 }
 
-                // Restaurar texto del botón de carga de foto
                 const uploadLabel = document.querySelector(".custom-file-upload span");
                 if (uploadLabel) uploadLabel.textContent = "Seleccionar o tomar foto";
 
-                // Cierre automático del acordeón
                 const collapse = document.querySelector(".resenas-collapse");
                 if (collapse) collapse.removeAttribute("open");
 
             } catch (error) {
                 console.error("Error al enviar la reseña:", error);
-                alert("Hubo un detalle al enviar tu comentario. Intenta de nuevo.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un detalle al enviar tu comentario. Intenta de nuevo.',
+                    background: '#1e293b',
+                    color: '#f8fafc',
+                    confirmButtonColor: '#ef4444'
+                });
             } finally {
                 if (btnSubmit) {
                     btnSubmit.disabled = false;
@@ -269,30 +284,47 @@ document.addEventListener("DOMContentLoaded", () => {
                   const fechaObj = new Date(data.fecha);
                   const fechaFormateada = fechaObj.toLocaleDateString("es-MX", { year: 'numeric', month: 'short', day: 'numeric' });
 
+                  // Estrellas HTML
                   let estrellasHTML = "";
                   for (let i = 1; i <= 5; i++) {
                       estrellasHTML += `<i class="${i <= data.estrellas ? 'fa-solid' : 'fa-regular'} fa-star"></i>`;
                   }
 
-                  const productoTag = data.productoNombre ? `<div class="resena-product-tag"><i class="fa-solid fa-tag"></i> ${data.productoNombre} (${data.productoId})</div>` : '';
+                  // Tag Morado CLICKEABLE
+                  const productoLink = data.productoId ? `productos.html?id=${encodeURIComponent(data.productoId)}` : 'productos.html';
+                  const productoTag = data.productoNombre ? `
+                      <a href="${productoLink}" class="resena-product-tag" title="Ver ${data.productoNombre}">
+                          <i class="fa-solid fa-tag"></i> ${data.productoNombre} (${data.productoId})
+                      </a>
+                  ` : '';
+
+                  // Foto sólo si existe
                   const fotoHTML = data.fotoUrl ? `<div class="resena-img-container"><img src="${data.fotoUrl}" alt="Foto del trabajo"></div>` : '';
+
+                  // Rating continuo + Nota numérica (ej. 4/5)
+                  const ratingHTML = `
+                      <div class="resena-rating-box">
+                          <span class="resena-stars-icons">${estrellasHTML}</span>
+                          <span class="resena-rating-score">${data.estrellas}/5</span>
+                      </div>
+                  `;
 
                   const card = document.createElement("div");
                   card.className = "resena-card";
                   card.innerHTML = `
-                      <div>
+                      <div class="resena-card-main">
                           <div class="resena-header">
                               <div class="resena-author">
                                   <h4>${data.nombre}</h4>
                                   <span class="resena-service-badge">${data.servicio || 'Cliente'}</span>
                                   ${productoTag}
                               </div>
-                              <div class="resena-stars">${estrellasHTML}</div>
+                              ${ratingHTML}
                           </div>
-                          <p class="resena-body" style="margin-top: 12px;">"${data.comentario}"</p>
+                          <p class="resena-body">"${data.comentario}"</p>
                           ${fotoHTML}
                       </div>
-                      <div class="resena-footer" style="margin-top: 12px;">${fechaFormateada}</div>
+                      <div class="resena-footer">${fechaFormateada}</div>
                   `;
                   resenasGrid.appendChild(card);
               });

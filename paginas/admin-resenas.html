@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Moderación | Admin</title>
+  <title>Panel de Administración | Mr. Pollería Don Juan</title>
   <link rel="icon" type="image/webp" href="../img/logo.webp">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- SweetAlert2 para Notificaciones Toast Elegantes -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Estilos Base y Exclusivos de Admin -->
   <link rel="stylesheet" href="../css/globales/base.css">
@@ -23,7 +26,7 @@
     <div id="auth-overlay" class="auth-overlay">
       <div class="auth-card">
         <i class="fa-solid fa-user-shield auth-icon"></i>
-        <h2>Panel de Moderación</h2>
+        <h2>Panel de Administración</h2>
         <p>Inicia sesión con tu cuenta de administrador.</p>
         
         <form id="form-login-admin" class="auth-form">
@@ -37,7 +40,7 @@
 
         <p id="auth-error" class="auth-error" style="display: none;"></p>
 
-        <!-- BOTÓN DE REGRESO AL SITIO PÚBLICO (EN PANTALLA DE LOGIN) -->
+        <!-- BOTÓN DE REGRESO AL SITIO PÚBLICO -->
         <div class="auth-back-container">
           <a href="../index.html" class="btn-back-public">
             <i class="fa-solid fa-arrow-left"></i> Regresar a la página principal
@@ -52,12 +55,12 @@
         <div style="display: flex; align-items: center; gap: 12px;">
           <img src="../img/logo.webp" alt="Logo" style="width: 45px; height: 45px; border-radius: 50%; border: 2px solid #38bdf8; object-fit: cover;">
           <div>
-            <h1><i class="fa-solid fa-list-check"></i> Moderación de Reseñas</h1>
+            <h1><i class="fa-solid fa-sliders"></i> Panel de Control</h1>
             <p class="admin-subtitle">Sesión iniciada como: <strong id="user-email-display" style="color:#38bdf8;"></strong></p>
           </div>
         </div>
 
-        <!-- Botones del Header (Dentro del Panel) -->
+        <!-- Botones del Header -->
         <div class="admin-header-actions">
           <a href="../index.html" class="btn-go-public" title="Ir a la página principal">
             <i class="fa-solid fa-house"></i> Ver Inicio Público
@@ -66,40 +69,105 @@
             <i class="fa-solid fa-right-from-bracket"></i> Salir
           </button>
         </div>
-
-      <!-- TARJETAS DE MÉTRICAS -->
-      <div class="admin-stats-bar">
-        <div class="stat-card">
-          <i class="fa-solid fa-clock-rotate-left stat-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);"></i>
-          <div>
-            <div id="stat-pending-count" class="stat-number">0</div>
-            <div class="stat-label">Pendientes por revisar</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <i class="fa-solid fa-circle-check stat-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"></i>
-          <div>
-            <div id="stat-approved-count" class="stat-number">0</div>
-            <div class="stat-label">Reseñas publicadas</div>
-          </div>
-        </div>
       </div>
 
-      <!-- SECCIÓN DE PENDIENTES -->
-      <section style="margin-bottom: 50px;">
-        <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color:#fbbf24;"></i> Pendientes de Aprobación</h3>
-        <div id="pending-grid" class="admin-resenas-grid">
-          <p class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Cargando reseñas pendientes...</p>
-        </div>
-      </section>
+      <!-- BARRA DE PESTAÑAS (TABS DE NAVEGACIÓN) -->
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="tab-resenas">
+          <i class="fa-solid fa-comments"></i> Moderación de Reseñas
+        </button>
+        <button class="tab-btn" data-tab="tab-productos">
+          <i class="fa-solid fa-boxes-stacked"></i> Catálogo y Stock
+        </button>
+      </div>
 
-      <!-- SECCIÓN DE APROBADAS -->
-      <section>
-        <h3 class="section-title"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Reseñas Ya Publicadas</h3>
-        <div id="approved-grid" class="admin-resenas-grid">
-          <p class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Cargando reseñas publicadas...</p>
+      <!-- PESTAÑA 1: MODERACIÓN DE RESEÑAS -->
+      <div id="tab-resenas" class="tab-content active">
+        <!-- TARJETAS DE MÉTRICAS RESEÑAS -->
+        <div class="admin-stats-bar">
+          <div class="stat-card">
+            <i class="fa-solid fa-clock-rotate-left stat-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);"></i>
+            <div>
+              <div id="stat-pending-count" class="stat-number">0</div>
+              <div class="stat-label">Pendientes por revisar</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fa-solid fa-circle-check stat-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"></i>
+            <div>
+              <div id="stat-approved-count" class="stat-number">0</div>
+              <div class="stat-label">Reseñas publicadas</div>
+            </div>
+          </div>
         </div>
-      </section>
+
+        <!-- SECCIÓN DE PENDIENTES -->
+        <section style="margin-bottom: 50px;">
+          <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color:#fbbf24;"></i> Pendientes de Aprobación</h3>
+          <div id="pending-grid" class="admin-resenas-grid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN DE APROBADAS -->
+        <section>
+          <h3 class="section-title"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Reseñas Ya Publicadas</h3>
+          <div id="approved-grid" class="admin-resenas-grid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PESTAÑA 2: GESTIÓN DE PRODUCTOS Y STOCK -->
+      <div id="tab-productos" class="tab-content">
+        <!-- ACCIONES SUPERIORES Y BUSCADOR -->
+        <div class="products-top-bar">
+          <div class="products-search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-admin-products" class="form-input" placeholder="Buscar producto por ID o nombre...">
+          </div>
+          <button id="btn-add-product" class="btn-add-product">
+            <i class="fa-solid fa-plus"></i> Nuevo Producto
+          </button>
+        </div>
+
+        <!-- MÉTRICAS DE PRODUCTOS -->
+        <div class="admin-stats-bar">
+          <div class="stat-card">
+            <i class="fa-solid fa-box stat-icon" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1);"></i>
+            <div>
+              <div id="stat-products-total" class="stat-number">0</div>
+              <div class="stat-label">Total en catálogo</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fa-solid fa-check-double stat-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"></i>
+            <div>
+              <div id="stat-products-instock" class="stat-number">0</div>
+              <div class="stat-label">En Stock</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fa-solid fa-ban stat-icon" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);"></i>
+            <div>
+              <div id="stat-products-outstock" class="stat-number">0</div>
+              <div class="stat-label">Agotados</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRILLA DE PRODUCTOS -->
+        <section>
+          <h3 class="section-title"><i class="fa-solid fa-cubes" style="color:#38bdf8;"></i> Productos Registrados</h3>
+          <div id="products-grid" class="admin-products-grid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
+        </section>
+      </div>
+
     </div>
 
   </div>

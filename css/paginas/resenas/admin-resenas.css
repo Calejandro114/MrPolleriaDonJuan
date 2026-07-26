@@ -122,10 +122,54 @@
     color: #ffffff;
 }
 
+/* Pestañas de Navegación (Tabs) */
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 12px;
+}
+
+.tab-btn {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: #f8fafc;
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tab-btn.active {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 /* Banner de Métricas Rápidas */
 .admin-stats-bar {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 35px;
 }
@@ -166,13 +210,14 @@
     gap: 10px;
 }
 
-/* Grilla del Admin */
-.admin-resenas-grid {
+/* Grillas */
+.admin-resenas-grid, .admin-products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
 
+/* Tarjetas de Reseñas */
 .admin-card {
     background: #1e293b;
     border: 1px solid #334155;
@@ -232,7 +277,139 @@
     color: #ffffff;
 }
 
-/* Tarjeta de Estado Vacío (Empty State Card) */
+/* Tarjetas de Productos */
+.admin-product-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.product-card-top {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.product-thumb {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #334155;
+    background: #0f172a;
+    flex-shrink: 0;
+}
+
+.product-info h4 {
+    color: #f8fafc;
+    font-size: 1.05rem;
+    margin: 0 0 4px 0;
+}
+
+.product-id-badge {
+    display: inline-block;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.product-price {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 4px;
+}
+
+/* Selector de Stock Rápido */
+.stock-selector {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid transparent;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.stock-selector.instock {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.stock-selector.outstock {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.stock-selector.onorder {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+/* Barra superior de productos */
+.products-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.products-search-box {
+    position: relative;
+    flex: 1;
+    min-width: 260px;
+}
+
+.products-search-box .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+}
+
+.products-search-box input {
+    padding-left: 40px !important;
+}
+
+.btn-add-product {
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-add-product:hover {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* Tarjeta Estado Vacío */
 .empty-state-card {
     background: rgba(30, 41, 59, 0.4);
     border: 2px dashed #334155;
@@ -264,12 +441,22 @@
     color: #64748b;
 }
 
-.loading-text {
-    color: #94a3b8;
-    grid-column: 1 / -1;
+/* Skeleton Loaders */
+.skeleton-card {
+    height: 180px;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 16px;
+    border: 1px solid #334155;
 }
 
-/* Estilos para los campos de texto del Login Admin */
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Estilos Formulario Login */
 .auth-form .form-input {
     width: 100%;
     padding: 12px 16px;
@@ -288,7 +475,6 @@
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
-/* Estilo para el botón de Iniciar Sesión */
 .auth-form .btn-submit-review {
     width: 100%;
     padding: 12px;
@@ -313,7 +499,6 @@
     box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
 }
 
-/* Botón de regreso en la pantalla de Login */
 .auth-back-container {
     margin-top: 20px;
     padding-top: 15px;
@@ -342,4 +527,20 @@
     background: #38bdf8;
     color: #0f172a;
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+/* Personalización SweetAlert2 */
+.swal2-popup {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+    border-radius: 16px !important;
+}
+
+.swal2-title {
+    color: #f8fafc !important;
+}
+
+.swal2-html-container {
+    color: #94a3b8 !important;
 }
