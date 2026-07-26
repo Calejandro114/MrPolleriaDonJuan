@@ -13,7 +13,7 @@ export function renderNavUI() {
     const linkCatalogo = `${rutaPaginas}productos.html`;
     const linkBazares = `${rutaPaginas}bazares.html`;
     const linkResenas = `${rutaPaginas}resenas.html`;
-    const linkContacto = `${rutaPaginas}contacto.html`; // 👈 Redirige a la página de contacto
+    const linkContacto = `${rutaPaginas}contacto.html`;
 
     wrapper.innerHTML = `
         <nav class="main-nav">
@@ -51,5 +51,27 @@ export function renderNavUI() {
                 });
             }
         });
+    }
+
+    // 3. Manejador Global de Scroll para hacer aparecer el Logo Mini (.nav-brand)
+    const navbar = document.querySelector(".sticky-navbar");
+    if (navbar) {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            // Transición progresiva calculada en los primeros 120px de desplazamiento
+            const progress = Math.min(1, scrollY / 120);
+            
+            navbar.style.setProperty("--scroll-progress", progress);
+
+            if (progress > 0.4) {
+                navbar.classList.add("navbar-scrolled");
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        // Ejecución inmediata por si la página carga a mitad de la vista
+        handleScroll();
     }
 }
