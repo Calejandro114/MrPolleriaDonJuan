@@ -7,6 +7,14 @@
   <link rel="icon" type="image/webp" href="../img/logo.webp?v=2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- Configuración PWA & SEO OpenGraph para WhatsApp -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:title" content="Bazares y Eventos | Mr. Pollería Don Juan">
+  <meta property="og:description" content="Encuentra las fechas y ubicaciones de los próximos bazares locales donde nos presentaremos.">
+  <meta property="og:image" content="../img/logo.webp">
+  <meta property="og:type" content="website">
+
   <!-- Componentes Base -->
   <link rel="stylesheet" href="../css/globales/base.css">
   <link rel="stylesheet" href="../css/globales/layout.css">
@@ -17,6 +25,17 @@
 
   <!-- Header / Hero Banner -->
   <link rel="stylesheet" href="../css/paginas/inicio/header.css">
+
+  <!-- Registro del Service Worker para PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(reg => console.log('PWA Service Worker registrado', reg))
+          .catch(err => console.error('Error registrando Service Worker', err));
+      });
+    }
+  </script>
 </head>
 <body>
 

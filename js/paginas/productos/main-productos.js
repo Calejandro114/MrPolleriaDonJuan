@@ -27,11 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             stickyNavbar.style.setProperty("--scroll-progress", progress);
 
-            // Mantener la clase visible o activarla progresivamente
             if (scrollY > 50 || progress >= 0.5) {
                 stickyNavbar.classList.add('navbar-scrolled');
             } else {
-                stickyNavbar.classList.add('navbar-scrolled'); // Garantiza que no se oculte el marca en subpáginas
+                stickyNavbar.classList.add('navbar-scrolled');
             }
         }, { passive: true });
     }
@@ -53,9 +52,28 @@ document.addEventListener("DOMContentLoaded", () => {
             snapshot.forEach((doc) => {
                 listaProductos.push({ id: doc.id, ...doc.data() });
             });
+            
+            // Aplicar filtros incluyendo búsqueda por URL si existe
+            procesarBusquedaURL();
             aplicarFiltrosYRender(listaProductos);
         }, (error) => {
             console.error("Error al cargar el catálogo de Firebase:", error);
         });
+    }
+
+    // 6. Detectar parámetro ?id= de la URL (proveniente de enlaces en reseñas)
+    function procesarBusquedaURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchParam = urlParams.get('id');
+
+        if (searchParam) {
+            const searchInput = document.getElementById("search-input");
+            const clearSearchBtn = document.getElementById("clear-search");
+
+            if (searchInput && !searchInput.value) {
+                searchInput.value = searchParam;
+                if (clearSearchBtn) clearSearchBtn.style.display = "flex";
+            }
+        }
     }
 });

@@ -1,0 +1,17 @@
+{
+  "name": "Mr. Pollería Don Juan",
+  "short_name": "Pollería DJ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "description": "Impresión 3D, Corte Láser, Macramé y Regalos Personalizados.",
+  "icons": [
+    {
+      "src": "./img/logo.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

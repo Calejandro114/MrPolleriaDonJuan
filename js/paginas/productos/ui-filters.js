@@ -9,8 +9,9 @@ export function renderFiltersUI() {
     const wrapper = document.getElementById("search-filter-wrapper");
     if (!wrapper) return;
 
+    // Quitamos la clase 'hidden' para que el buscador esté abierto siempre
     wrapper.innerHTML = `
-        <div id="search-filter-panel" class="search-filter-panel hidden">
+        <div id="search-filter-panel" class="search-filter-panel">
             
             <!-- Barra Superior Unificada (Input de Búsqueda) -->
             <div class="search-input-wrapper">

@@ -7,6 +7,14 @@
   <link rel="icon" type="image/webp" href="../img/logo.webp?v=2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- Configuración PWA & SEO OpenGraph para WhatsApp -->
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:title" content="Reseñas de Clientes | Mr. Pollería Don Juan">
+  <meta property="og:description" content="Lee las opiniones y fotos de los trabajos entregados a nuestros clientes.">
+  <meta property="og:image" content="../img/logo.webp">
+  <meta property="og:type" content="website">
+
   <!-- SweetAlert2 para mensajes flotantes -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -24,6 +32,17 @@
   <!-- Estilos Exclusivos de Reseñas -->
   <link rel="stylesheet" href="../css/paginas/resenas/resenas-form.css?v=2">
   <link rel="stylesheet" href="../css/paginas/resenas/resenas-card.css?v=2">
+
+  <!-- Registro del Service Worker para PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(reg => console.log('PWA Service Worker registrado', reg))
+          .catch(err => console.error('Error registrando Service Worker', err));
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -57,7 +76,7 @@
       <div id="resenas-grid" class="resenas-grid"></div>
     </section>
 
-    <!-- 2. DESPUÉS: Acordeón / Colapsable para el Formulario -->
+    <!-- 2. DESPUÉS: Acordeón para el Formulario -->
     <details class="resenas-collapse">
       <summary class="btn-toggle-form">
         <span><i class="fa-solid fa-pen-to-square"></i> Déjanos tu Reseña</span>
@@ -69,10 +88,8 @@
           Tu opinión nos ayuda a seguir creando piezas únicas y de calidad.
         </p>
 
-        <!-- 👈 AQUÍ SE AGREGÓ LA ETIQUETA FORM -->
         <form id="form-resena">
-
-          <!-- Nombre o Anónimo Estilizado -->
+          <!-- Nombre o Anónimo -->
           <div class="form-group">
             <div class="header-nombre-container">
               <label for="nombre">Nombre o Apodo *</label>
@@ -86,7 +103,7 @@
             <input type="text" id="nombre" class="form-input" placeholder="Ej. Carlos M." required>
           </div>
 
-          <!-- Buscador de Producto con Vista Previa -->
+          <!-- Buscador de Producto -->
           <div class="form-group" style="position: relative;">
             <label for="buscar-producto">Producto Asociado (Opcional)</label>
             <input type="text" id="buscar-producto" class="form-input" placeholder="Escribe ID (ej. 3DP-004) o nombre..." autocomplete="off">
@@ -117,7 +134,7 @@
             <input type="hidden" id="estrellas" value="5">
           </div>
 
-          <!-- Campo para subir Foto -->
+          <!-- Campo Foto -->
           <div class="form-group">
             <label>Foto de tu Pieza (Opcional)</label>
             <input type="file" id="foto-producto" accept="image/*" class="file-input-hidden">
@@ -146,7 +163,7 @@
           <p class="notice-text">
             <i class="fa-solid fa-shield-halved"></i> Para evitar comentarios vacíos o spam, las reseñas se verifican brevemente antes de hacerse públicas.
           </p>
-        </form> <!-- 👈 CIERRE DE FORM -->
+        </form>
       </div>
     </details>
 
