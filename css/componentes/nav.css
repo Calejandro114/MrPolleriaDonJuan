@@ -13,14 +13,14 @@
     align-items: center;
     justify-content: center; /* Centra los elementos por defecto */
 
-    /* El fondo oscuro de la barra se va intensificando al bajar */
+    /* El fondo oscuro se intensifica al bajar */
     background-color: rgba(15, 23, 42, calc(var(--scroll-progress, 0) * 0.95));
     backdrop-filter: blur(8px);
     transition: background-color 0.2s ease, border-color 0.2s ease;
     border-bottom: 1px solid rgba(51, 65, 85, calc(var(--scroll-progress, 0) * 0.5));
 }
 
-/* 2. MARCA (LOGO MINI + TEXTO) -> Esto es lo ÚNICO que se oculta arriba */
+/* 2. MARCA (LOGO MINI + TEXTO) */
 .nav-brand {
     display: flex;
     align-items: center;
@@ -55,8 +55,7 @@
     white-space: nowrap;
 }
 
-/* 3. CONTENEDOR Y ENLACES DEL MENÚ (SIEMPRE VISIBLES) */
-/* css/componentes/nav.css */
+/* 3. CONTENEDOR Y ENLACES DEL MENÚ */
 
 /* Contenedor del menú */
 #nav-wrapper {
@@ -67,6 +66,7 @@
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Cuando el usuario baja en PC, empujamos el menú a la derecha para dar espacio al logo */
 .navbar-scrolled #nav-wrapper {
     margin-left: 220px; 
 }
@@ -97,43 +97,56 @@
 }
 
 /* ==========================================
-   AJUSTES EXCLUSIVOS PARA PANTALLAS MÓVILES
+   4. AJUSTES EXCLUSIVOS PARA MÓVILES (MÁX 768px)
    ========================================== */
 @media (max-width: 768px) {
     .sticky-navbar {
-        padding: 6px 10px; /* Reduce relleno para dar más espacio */
+        padding: 6px 10px;
+        justify-content: center;
     }
 
-    .navbar-scrolled #nav-wrapper {
-        margin-left: 0 !important;
-    }
-
-    /* Ocultar la marca/logo en móvil si estorba al hacer scroll */
+    /* Logo flotante mini a la izquierda al hacer scroll */
     .nav-brand {
-        display: none !important; 
+        display: flex !important;
+        left: 8px;
     }
 
-    /* Convertimos la lista de enlaces en un carrusel horizontal deslizable */
+    .logo-mini {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Ocultamos el texto largo en móvil para no encimar los enlaces */
+    .brand-title {
+        display: none !important;
+    }
+
+    /* Margen compensatorio reducido para móvil cuando aparece el logo mini */
+    .navbar-scrolled #nav-wrapper {
+        margin-left: 32px !important;
+    }
+
+    /* Menú horizontal centrado y deslizable */
     .main-nav {
-        flex-wrap: nowrap !important; /* Prohibido romper en 2 filas */
-        justify-content: flex-start !important;
-        overflow-x: auto !important; /* Deslizamiento táctil horizontal */
-        width: 100% !important;
+        flex-wrap: nowrap !important; /* Mantiene 1 sola fila */
+        justify-content: center !important; /* Centra los enlaces por defecto */
+        overflow-x: auto !important; /* Deslizamiento fluido si la pantalla es muy angosta */
+        max-width: 100% !important;
         padding: 4px 0 !important;
-        gap: 4px !important;
+        gap: 2px !important;
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Ocultar barra de scroll visual para estética limpia */
+    /* Ocultar barra de scroll visual */
     .main-nav::-webkit-scrollbar {
         display: none;
     }
 
-    /* Estilo compacto para que quepan mejor los enlaces */
+    /* Tamaño de botones y texto compacto para móvil */
     .nav-link {
-        white-space: nowrap !important; /* Evita saltos de texto */
-        font-size: 0.82rem !important;
-        padding: 5px 10px !important;
-        flex-shrink: 0; /* Previene que se aplasten */
+        white-space: nowrap !important;
+        font-size: 0.8rem !important;
+        padding: 5px 8px !important;
+        flex-shrink: 0;
     }
 }
