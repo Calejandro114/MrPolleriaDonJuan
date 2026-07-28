@@ -180,15 +180,16 @@
     color: #ffffff;
     border: 1px solid #38bdf8;
     border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 1.1rem;
+    padding: 10px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px; /* Espacio entre el texto y el icono */
     transition: all 0.2s ease;
-    min-width: 44px;
-    height: 41px;
+    white-space: nowrap;
 }
 
 .btn-add-cart:hover {
