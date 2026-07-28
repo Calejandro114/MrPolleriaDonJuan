@@ -137,16 +137,16 @@
    ========================================== */
 .product-actions-group {
     display: flex;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 6px;
     align-items: center;
+    width: 100%;
 }
 
+/* Flexibilidad en los botones */
 .product-actions-group .btn-buy {
-    flex: 1; /* Ocupa todo el espacio restante disponible a la izquierda */
-    margin-top: 0 !important;
-    padding: 10px 8px;
-    font-size: 0.88rem;
+    flex: 1.2; /* Toma un poco más de espacio */
+    padding: 8px 6px;
+    font-size: 0.78rem;
     white-space: nowrap;
 }
 
@@ -176,18 +176,19 @@
 
 /* Botón estético del Carrito de Compras */
 .btn-add-cart {
+    flex: 1; /* Distribuye el espacio proporcionalmente */
     background-color: #0284c7;
     color: #ffffff;
     border: 1px solid #38bdf8;
     border-radius: 8px;
-    padding: 10px 10px;
-    font-size: 0.8rem;
+    padding: 8px 6px;
+    font-size: 0.75rem;
     font-weight: bold;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px; /* Espacio entre el texto y el icono */
+    gap: 4px;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
@@ -195,8 +196,6 @@
 .btn-add-cart:hover {
     background-color: #0369a1;
     border-color: #7dd3fc;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
 }
 
 .btn-add-cart:active {
