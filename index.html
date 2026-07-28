@@ -70,17 +70,17 @@
   <!-- Contenido Principal de la Portada -->
   <div class="container">
     
-    <!-- TRABAJOS REALES (Carrusel de entregas a clientes) -->
+    <!-- 1. TRABAJOS REALES (Carrusel de entregas a clientes) -->
     <section id="carousel-container"></section>
 
-    <!-- DESTACADOS Y NOVEDADES -->
+    <!-- 2. DESTACADOS Y NOVEDADES -->
     <section id="destacados-seccion" class="destacados-section destacados-card">
       <div class="section-header">
         <h2>Destacados y Novedades</h2>
         <p>Los más pedidos y las últimas creaciones del taller</p>
       </div>
 
-      <!-- Grilla donde JS inyectará las tarjetas -->
+      <!-- Grilla donde JS inyectará las tarjetas de productos -->
       <div id="featured-products-grid" class="products-grid"></div>
 
       <!-- Botón para ir al Catálogo completo -->
@@ -92,6 +92,17 @@
       </div>
     </section>
 
+    <!-- 3. PREVIEW DE RESEÑAS / CLIENTES -->
+    <section id="resenas-seccion" class="destacados-section destacados-card" style="margin-top: 30px;">
+      <div class="section-header">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <p>Opiniones reales de personas que han confiado en nuestro taller</p>
+      </div>
+
+      <!-- Grilla donde resenas-inicio.js inyectará las opiniones -->
+      <div id="resenas-preview-grid" class="resenas-grid"></div>
+    </section>
+
   </div>
 
   <!-- Pie de página (Inyectado por JS) -->
@@ -100,9 +111,12 @@
   <!-- Contenedor para el Modal de Imagen -->
   <div id="modal-container"></div>
 
-  <!-- Configuración de Firebase e Inicialización Modular -->
-  <script type="module" src="../js/config/firebase-config.js"></script>
-  <script type="module" src="../js/paginas/bazares/main-bazares.js"></script>
-  
+  <!-- Firebase Compat (SDKs) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- Script Principal de la Portada (Módulo Orquestador) -->
+  <script type="module" src="js/paginas/inicio/main-inicio.js"></script>
+
 </body>
 </html>
