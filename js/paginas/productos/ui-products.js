@@ -1,5 +1,6 @@
 /* js/paginas/productos/ui-products.js */
 import { openModal } from '../../componentes/ui-modal.js';
+import { addToCart } from '../../componentes/cart-service.js';
 
 const WHATSAPP_PHONE = "526673538481"; 
 
@@ -33,7 +34,7 @@ export function renderProductsUI(items, customContainer = null) {
         const esNoDisponibleActualmente = !esDisponibleVenta; 
         const esPiezaUnica = !esAgotado && !esSobrePedido && esDisponibleVenta;
         const esAgotadoSobrePedido = esAgotado && esSobrePedido && esDisponibleVenta;
-        const esEnStockSobrePedido = !esAgotado && esSobrePedido && esDisponibleVenta;
+        const esEnStockSobrePedido = !esAgotado && !esSobrePedido && esDisponibleVenta;
 
         // Normalización de la ruta de imagen
         let imgSrc = prod.imagen || fallbackImage;
@@ -111,6 +112,7 @@ export function renderProductsUI(items, customContainer = null) {
                         <i class="fa-brands fa-whatsapp"></i> Comprar Pieza
                     </a>
                     <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <span>Agregar al Carrito</span>
                         <i class="fa-solid fa-cart-plus"></i>
                     </button>
                 </div>
@@ -141,6 +143,7 @@ export function renderProductsUI(items, customContainer = null) {
                         <i class="fa-brands fa-whatsapp"></i> Encargar
                     </a>
                     <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <span>Agregar al Carrito</span>
                         <i class="fa-solid fa-cart-plus"></i>
                     </button>
                 </div>
@@ -184,6 +187,7 @@ export function renderProductsUI(items, customContainer = null) {
                         <i class="fa-brands fa-whatsapp"></i> Pedir o Encargar
                     </a>
                     <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <span>Agregar al Carrito</span>
                         <i class="fa-solid fa-cart-plus"></i>
                     </button>
                 </div>
