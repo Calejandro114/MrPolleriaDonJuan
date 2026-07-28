@@ -1,14 +1,10 @@
 /* css/products.css */
 
-/* css/products.css */
-
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Tarjetas un poco más anchas */
     gap: 24px; /* Mayor separación entre tarjetas */
     width: 100%;
-
-    /* ⬇️ AGREGA ESTA LÍNEA PARA SEPARARLO DE LAS CATEGORÍAS ⬇️ */
     margin-top: 20px; 
 }
 
@@ -136,8 +132,29 @@
 .badge-custom-order { background-color: #0284c7; }
 .badge-sold-out { background-color: #64748b; }
 
+/* ==========================================
+   GRUPO DE BOTONES DE ACCIÓN (WHATSAPP + CARRITO)
+   ========================================== */
+.product-actions-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+}
+
+.product-actions-group .btn-buy {
+    flex: 1; /* Ocupa todo el espacio restante disponible a la izquierda */
+    margin-top: 0 !important;
+    padding: 10px 8px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
 .btn-buy {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     text-align: center;
     background-color: #25D366;
     color: #ffffff;
@@ -146,7 +163,6 @@
     border-radius: 8px;
     font-weight: bold;
     font-size: 0.9rem;
-    margin-top: 4px;
     transition: background 0.2s;
 }
 
@@ -156,6 +172,47 @@
     color: #94a3b8;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Botón estético del Carrito de Compras */
+.btn-add-cart {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    min-width: 44px;
+    height: 41px;
+}
+
+.btn-add-cart:hover {
+    background-color: #0369a1;
+    border-color: #7dd3fc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.btn-add-cart:active {
+    transform: translateY(0);
+}
+
+/* Animación sutil al hacer clic para dar feedback visual de +1 */
+.btn-add-cart.cart-added-pop {
+    animation: popScale 0.3s ease-in-out;
+    background-color: #10b981 !important;
+    border-color: #34d399 !important;
+}
+
+@keyframes popScale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
 }
 
 .stock-main {
@@ -189,6 +246,11 @@
     
     .card-image-wrapper,
     .product-card img {
-        height: 180px; /* Ligera reducción en cel para ver más productos en pantalla */
+        height: 180px;
+    }
+
+    .product-actions-group .btn-buy {
+        font-size: 0.8rem;
+        padding: 10px 4px;
     }
 }

@@ -70,7 +70,7 @@ export function renderProductsUI(items, customContainer = null) {
         }
 
         // =========================================================================
-        // APLICACIÓN DE LAS REGLAS POR CADA UNO DE LOS 4 ESTADOS
+        // APLICACIÓN DE LAS REGLAS POR CADA UNO DE LOS 4 ESTADOS CON BOTÓN DOBLE
         // =========================================================================
 
         if (esNoDisponibleActualmente) {
@@ -83,9 +83,11 @@ export function renderProductsUI(items, customContainer = null) {
                 </div>
             `;
             buttonHTML = `
-                <button class="btn-buy" disabled style="background-color: #334155; color: #94a3b8; cursor: not-allowed; border: none; width: 100%;">
-                    No disponible por el momento
-                </button>
+                <div class="product-actions-group">
+                    <button class="btn-buy" disabled style="background-color: #334155; color: #94a3b8; cursor: not-allowed; border: none; width: 100%;">
+                        No disponible por el momento
+                    </button>
+                </div>
             `;
 
         } else if (esPiezaUnica) {
@@ -95,7 +97,7 @@ export function renderProductsUI(items, customContainer = null) {
             stockHTML = `
                 <div class="stock-count" style="color: #10b981;">
                     <div class="stock-main">
-                        <i class="fa-solid fa-bolt" style="color: #10b981;"></i> ¡Pieza única en tienda para entrega inmediata!
+                        <i class="fa-solid fa-bolt" style="color: #10b981;"></i> ¡Pieza única en tienda!
                     </div>
                 </div>
             `;
@@ -104,13 +106,18 @@ export function renderProductsUI(items, customContainer = null) {
             const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
 
             buttonHTML = `
-                <a href="${waLink}" target="_blank" class="btn-buy" style="background-color: #10b981;">
-                    <i class="fa-brands fa-whatsapp"></i> Comprar Pieza Única
-                </a>
+                <div class="product-actions-group">
+                    <a href="${waLink}" target="_blank" class="btn-buy" style="background-color: #10b981;">
+                        <i class="fa-brands fa-whatsapp"></i> Comprar Pieza
+                    </a>
+                    <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                </div>
             `;
 
         } else if (esAgotadoSobrePedido) {
-            // 🔴 CASO 3: AGOTADO SOBRE PEDIDO (Se mantiene intacto sin modificar)
+            // 🔴 CASO 3: AGOTADO SOBRE PEDIDO
             if (!estaEnOferta) {
                 badgeHTML = `<span class="badge-offer badge-custom-order">Sobre Pedido</span>`;
             }
@@ -129,13 +136,18 @@ export function renderProductsUI(items, customContainer = null) {
             const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
 
             buttonHTML = `
-                <a href="${waLink}" target="_blank" class="btn-buy" style="background-color: #0284c7;">
-                    <i class="fa-brands fa-whatsapp"></i> Encargar sobre Pedido
-                </a>
+                <div class="product-actions-group">
+                    <a href="${waLink}" target="_blank" class="btn-buy" style="background-color: #0284c7;">
+                        <i class="fa-brands fa-whatsapp"></i> Encargar
+                    </a>
+                    <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                </div>
             `;
 
         } else {
-            // 🟢 CASO 4: EN STOCK SOBRE PEDIDO (Se mantiene tal cual estaba antes)
+            // 🟢 CASO 4: EN STOCK SOBRE PEDIDO
             const rawStock = prod.stock !== undefined ? prod.stock : prod.Stock;
             const cantidadStock = Number(rawStock);
 
@@ -149,7 +161,7 @@ export function renderProductsUI(items, customContainer = null) {
                     : `¡Solo quedan ${cantidadStock} disponibles!`;
             } else {
                 iconoStock = `<i class="fa-solid fa-bolt" style="color: #38bdf8;"></i>`;
-                textoEntrega = `¡Disponible en tienda para entrega inmediata!`;
+                textoEntrega = `¡Disponible para entrega inmediata!`;
             }
                 
             stockHTML = `
@@ -167,14 +179,16 @@ export function renderProductsUI(items, customContainer = null) {
             const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
 
             buttonHTML = `
-                <a href="${waLink}" target="_blank" class="btn-buy">
-                    <i class="fa-brands fa-whatsapp"></i> Pedir o Encargar
-                </a>
+                <div class="product-actions-group">
+                    <a href="${waLink}" target="_blank" class="btn-buy">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir o Encargar
+                    </a>
+                    <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                </div>
             `;
         }
-
-        // Estilo atenuado sutil para la tarjeta en estado "No disponible por el momento"
-        const cardOpacity = esNoDisponibleActualmente ? 'style="opacity: 0.55; filter: grayscale(30%);"' : '';
 
         const card = document.createElement("div");
         card.className = "product-card";
@@ -199,11 +213,24 @@ export function renderProductsUI(items, customContainer = null) {
             </div>
         `;
 
+        // Evento para abrir Modal al dar clic en la imagen
         const imgElement = card.querySelector('.card-image-wrapper img');
         if (imgElement) {
             imgElement.addEventListener('click', (e) => {
                 e.stopPropagation();
                 openModal(imgSrc);
+            });
+        }
+
+        // Feedback visual inmediato (Animación de prueba) al hacer clic en Agregar al Carrito
+        const btnAddCart = card.querySelector('.btn-add-cart');
+        if (btnAddCart) {
+            btnAddCart.addEventListener('click', (e) => {
+                e.preventDefault();
+                btnAddCart.classList.add('cart-added-pop');
+                setTimeout(() => {
+                    btnAddCart.classList.remove('cart-added-pop');
+                }, 300);
             });
         }
 
