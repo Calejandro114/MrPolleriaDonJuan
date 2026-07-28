@@ -1,6 +1,5 @@
 /* js/paginas/productos/ui-products.js */
 import { openModal } from '../../componentes/ui-modal.js';
-import { addToCart } from '../../componentes/cart-service.js';
 
 const WHATSAPP_PHONE = "526673538481"; 
 
