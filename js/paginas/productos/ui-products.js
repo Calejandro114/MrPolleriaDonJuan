@@ -1,5 +1,6 @@
 /* js/paginas/productos/ui-products.js */
 import { openModal } from '../../componentes/ui-modal.js';
+import { addToCart } from '../../componentes/cart-service.js';
 
 const WHATSAPP_PHONE = "526673538481"; 
 
@@ -222,11 +223,16 @@ export function renderProductsUI(items, customContainer = null) {
             });
         }
 
-        // Feedback visual inmediato (Animación de prueba) al hacer clic en Agregar al Carrito
+        // Agregar al carrito real + feedback visual
         const btnAddCart = card.querySelector('.btn-add-cart');
         if (btnAddCart) {
             btnAddCart.addEventListener('click', (e) => {
                 e.preventDefault();
+                
+                // Agrega el producto a localStorage y actualiza el contador de la Navbar
+                addToCart(prod);
+
+                // Animación sutil de botón presionado
                 btnAddCart.classList.add('cart-added-pop');
                 setTimeout(() => {
                     btnAddCart.classList.remove('cart-added-pop');

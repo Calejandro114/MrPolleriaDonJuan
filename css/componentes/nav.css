@@ -150,3 +150,44 @@
         flex-shrink: 0;
     }
 }
+
+
+/* Estilo del Botón de Carrito dentro de la Navbar */
+.cart-nav-btn {
+    position: relative;
+    background: #0284c7;
+    color: #ffffff;
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    transition: all 0.2s ease;
+}
+
+.cart-nav-btn:hover {
+    background: #0369a1;
+    transform: scale(1.05);
+}
+
+/* Insignia / Badge con el contador (+1, +2...) */
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0f172a;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
