@@ -109,7 +109,7 @@ export function renderProductsUI(items, customContainer = null) {
             buttonHTML = `
                 <div class="product-actions-group">
                     <a href="${waLink}" target="_blank" class="btn-buy" style="background-color: #10b981;">
-                        <i class="fa-brands fa-whatsapp"></i> Comprar Pieza
+                        <i class="fa-brands fa-whatsapp"></i> Encargar Pieza
                     </a>
                     <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
                         <span>Agregar al Carrito</span>
@@ -184,7 +184,7 @@ export function renderProductsUI(items, customContainer = null) {
             buttonHTML = `
                 <div class="product-actions-group">
                     <a href="${waLink}" target="_blank" class="btn-buy">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir o Encargar
+                        <i class="fa-brands fa-whatsapp"></i> Encargar Pieza
                     </a>
                     <button class="btn-add-cart" data-id="${prod.id || ''}" title="Agregar al Carrito">
                         <span>Agregar al Carrito</span>
